@@ -1,4 +1,4 @@
-﻿﻿"use client";
+﻿"use client";
 
 import React, { useEffect, useRef } from "react";
 
@@ -9,6 +9,7 @@ type Particle = {
   vy: number;
   r: number;
   alpha: number;
+  color: string;
 };
 
 export default function ParticlesBackground() {
@@ -28,13 +29,14 @@ export default function ParticlesBackground() {
     let lastTime = performance.now();
 
     const config = {
-      baseCount: 48,
-      minRadius: 0.9,
-      maxRadius: 2.4,
+      baseCount: 56,
+      minRadius: 1.2,
+      maxRadius: 3.4,
       maxSpeed: 0.22,
-      linkDistance: 140,
-      linkWidth: 0.9,
+      linkDistance: 155,
+      linkWidth: 1.15,
       bgAlpha: 0.0,
+      palette: ["125,249,255", "147,197,253", "96,165,250", "129,140,248"],
     };
 
     function resize() {
@@ -57,7 +59,8 @@ export default function ParticlesBackground() {
           vx: (Math.random() - 0.5) * config.maxSpeed,
           vy: (Math.random() - 0.5) * config.maxSpeed,
           r: config.minRadius + Math.random() * (config.maxRadius - config.minRadius),
-          alpha: 0.2 + Math.random() * 0.8,
+          alpha: 0.8 + Math.random() * 0.2,
+          color: config.palette[Math.floor(Math.random() * config.palette.length)],
         });
       }
     }
@@ -81,13 +84,13 @@ export default function ParticlesBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < config.linkDistance) {
             const t = 1 - dist / config.linkDistance;
-            const alpha = Math.min(0.45, t * 0.28 * ((a.alpha + b.alpha) / 2));
-            const linkAlpha = Math.min(0.95, alpha * 2.2);
+            const alpha = Math.min(0.8, t * 0.48 * ((a.alpha + b.alpha) / 2));
+            const linkAlpha = Math.min(1, alpha * 2.5);
             ctx.beginPath();
             ctx.lineWidth = config.linkWidth;
-            ctx.strokeStyle = `rgba(34,211,238,${linkAlpha})`;
-            ctx.shadowColor = `rgba(34,211,238,${linkAlpha})`;
-            ctx.shadowBlur = 12 * t + 2;
+            ctx.strokeStyle = `rgba(96,165,250,${linkAlpha})`;
+            ctx.shadowColor = `rgba(96,165,250,${linkAlpha})`;
+            ctx.shadowBlur = 22 * t + 5;
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
             ctx.stroke();
@@ -113,17 +116,25 @@ export default function ParticlesBackground() {
         if (p.y > height + 10) p.y = -10;
 
         ctx.beginPath();
-        const fillAlpha = Math.min(1, 0.9 * p.alpha + 0.12);
-        ctx.fillStyle = `rgba(34,211,238,${fillAlpha})`;
-        ctx.shadowColor = `rgba(34,211,238,${Math.min(0.6, fillAlpha)})`;
-        ctx.shadowBlur = 16;
+        const fillAlpha = Math.min(1, 1.02 * p.alpha + 0.24);
+        ctx.fillStyle = `rgba(${p.color},${fillAlpha})`;
+        ctx.shadowColor = `rgba(${p.color},${Math.min(1, fillAlpha)})`;
+        ctx.shadowBlur = 30;
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // bright core so dots stay visibly luminous on all dark sections
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${Math.min(0.9, fillAlpha * 0.8)})`;
+        ctx.shadowColor = `rgba(255,255,255,${Math.min(0.95, fillAlpha)})`;
+        ctx.shadowBlur = 10;
+        ctx.arc(p.x, p.y, Math.max(0.55, p.r * 0.45), 0, Math.PI * 2);
         ctx.fill();
         // subtle outer halo stroke for extra glow
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(34,211,238,${0.08 * fillAlpha})`;
-        ctx.lineWidth = 1.5;
-        ctx.shadowBlur = 10;
+        ctx.strokeStyle = `rgba(${p.color},${0.24 * fillAlpha})`;
+        ctx.lineWidth = 1.7;
+        ctx.shadowBlur = 18;
         ctx.arc(p.x, p.y, p.r + 1.2, 0, Math.PI * 2);
         ctx.stroke();
       }
