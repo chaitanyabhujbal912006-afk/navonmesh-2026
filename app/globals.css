@@ -440,12 +440,22 @@ a:focus-visible {
     font-size: clamp(1.125rem, 3vw, 1.875rem);
   }
 
-  section {
-    padding: 2rem 1rem !important;
-  }
-
   /* Ensure readable spacing on mobile */
   .section-title {
     font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  body::before {
+    opacity: 0.16;
+    background-size: 82px 82px;
+  }
+
+  body::after {
+    opacity: 0.2;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
   }
 }

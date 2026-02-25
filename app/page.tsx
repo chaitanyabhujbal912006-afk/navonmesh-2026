@@ -113,14 +113,14 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+    <main className="relative min-h-screen bg-black text-white overflow-x-clip">
       <ParticlesBackground />
       <Navbar />
 
       {/* ==================== HERO SECTION ==================== */}
       <section
         id="home"
-        className="relative min-h-screen w-full overflow-hidden pt-20 md:pt-0 flex items-center justify-center"
+        className="relative min-h-screen w-full overflow-hidden pt-16 md:pt-0 flex items-center justify-center"
       >
         {/* BACKGROUND IMAGE */}
         <Image
@@ -135,7 +135,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black"></div>
 
         {/* CONTENT */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20 text-center flex flex-col items-center justify-center min-h-screen">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-10 md:py-20 text-center flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-screen">
           {/* UNIVERSITY BADGE */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -148,7 +148,7 @@ export default function Home() {
               alt="University Logo"
               width={160}
               height={70}
-              className="opacity-95"
+              className="opacity-95 w-32 sm:w-36 md:w-40 h-auto"
             />
           </motion.div>
 
@@ -157,7 +157,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-xs md:text-sm text-gray-300 tracking-[3px] uppercase mb-4 md:mb-6 font-medium"
+            className="text-[10px] sm:text-xs md:text-sm text-gray-300 tracking-[2px] sm:tracking-[3px] uppercase mb-4 md:mb-6 font-medium"
           >
             School of Engineering & Technology presents
           </motion.p>
@@ -167,7 +167,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="font-display text-4xl md:text-6xl lg:text-8xl font-black leading-tight mb-2 md:mb-4 bg-gradient-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]"
+            className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black leading-tight mb-2 md:mb-4 bg-gradient-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]"
           >
             NAVONMESH
           </motion.h1>
@@ -180,7 +180,7 @@ export default function Home() {
             className="flex items-center gap-3 md:gap-4 mb-4 md:mb-8"
           >
             <div className="h-1 w-6 md:w-12 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
-            <h2 className="font-display text-2xl md:text-4xl font-bold text-cyan-300 tracking-[0.2em]">2026</h2>
+            <h2 className="font-display text-2xl md:text-4xl font-bold text-cyan-300 tracking-[0.14em] sm:tracking-[0.2em]">2026</h2>
             <div className="h-1 w-6 md:w-12 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
           </motion.div>
 
@@ -189,7 +189,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-base md:text-lg text-gray-300 font-light tracking-wider mb-8 md:mb-12"
+            className="text-sm sm:text-base md:text-lg text-gray-300 font-light tracking-wide sm:tracking-wider mb-8 md:mb-12"
           >
             Where Innovation Meets Excellence
           </motion.p>
@@ -199,19 +199,19 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-12"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 md:mb-12 w-full sm:w-auto"
           >
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary px-8 md:px-10 py-3 md:py-4 text-sm md:text-base"
+              className="btn-primary w-full sm:w-auto px-8 md:px-10 py-3 md:py-4 text-sm md:text-base"
             >
               Register Now
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-secondary px-8 md:px-10 py-3 md:py-4 text-sm md:text-base"
+              className="btn-secondary w-full sm:w-auto px-8 md:px-10 py-3 md:py-4 text-sm md:text-base"
             >
               Explore Events
             </motion.button>
@@ -233,7 +233,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+          className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
         >
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }} className="text-cyan-400">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,7 +244,7 @@ export default function Home() {
       </section>
 
       {/* ==================== ABOUT SECTION ==================== */}
-      <section id="about" className="relative py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/30 to-black">
+      <section id="about" className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/30 to-black">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -289,7 +289,7 @@ export default function Home() {
       </section>
 
       {/* ==================== EVENTS SECTION (PRIMARY FOCUS) ==================== */}
-      <section id="events" className="relative py-16 md:py-24 px-4 md:px-8 bg-black">
+      <section id="events" className="relative py-14 md:py-20 px-4 md:px-8 bg-black">
         <div className="max-w-7xl mx-auto">
           {/* SECTION HEADER */}
           <motion.div
@@ -333,7 +333,7 @@ export default function Home() {
                       {/* ICON & CATEGORY */}
                       <div className="flex items-start justify-between mb-4">
                         <span className="text-3xl md:text-4xl group-hover:scale-110 transition duration-300">{event.icon}</span>
-                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 group-hover:bg-cyan-500/40 transition">
+                        <span className="px-2.5 py-1 text-[10px] sm:text-xs font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 group-hover:bg-cyan-500/40 transition max-w-[56%] sm:max-w-[65%] truncate">
                           {event.category}
                         </span>
                       </div>
@@ -385,7 +385,7 @@ export default function Home() {
       </section>
 
       {/* ==================== TIMELINE SECTION ==================== */}
-      <section id="timeline" className="relative py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/20 to-black">
+      <section id="timeline" className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/20 to-black">
         <div className="max-w-5xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -426,32 +426,32 @@ export default function Home() {
       </section>
 
       {/* ==================== PRIZES SECTION ==================== */}
-      <section id="prizes" className="relative py-16 md:py-24 px-4 md:px-8 bg-[#02060f]">
+      <section id="prizes" className="relative py-14 md:py-20 px-4 md:px-8 bg-[#02060f]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,235,0.1),rgba(1,6,18,0.92)_50%)]" />
           <div className="absolute inset-y-0 left-1/2 w-[70%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(16,185,210,0.08),transparent)] blur-2xl" />
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
+        <div className="relative max-w-[1180px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-10 md:mb-12"
           >
-            <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-cyan-300 drop-shadow-[0_0_16px_rgba(34,211,238,0.35)]">
+            <h2 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-cyan-300 drop-shadow-[0_0_16px_rgba(34,211,238,0.35)]">
               Total Prize Pool
             </h2>
-            <p className="mt-4 text-5xl md:text-7xl font-black text-white tracking-tight">
+            <p className="mt-3 text-5xl md:text-6xl font-black text-white tracking-tight">
               ₹1,75,000+
             </p>
-            <p className="mt-4 text-base md:text-xl text-slate-400">
+            <p className="mt-3 text-base md:text-lg text-slate-400">
               Real rewards for real ideas. Industry recognition awaits the champions.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
             {[
               {
                 icon: "🏆",
@@ -488,19 +488,19 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -6 }}
-                className={`rounded-2xl border ${prize.border} bg-[linear-gradient(180deg,rgba(10,16,30,0.88),rgba(6,10,20,0.96))] p-8 text-center backdrop-blur-md transition duration-300 hover:shadow-[0_0_42px_rgba(6,182,212,0.2)]`}
+                className={`rounded-2xl border ${prize.border} bg-[linear-gradient(180deg,rgba(10,16,30,0.88),rgba(6,10,20,0.96))] p-6 md:p-7 md:min-h-[350px] text-center backdrop-blur-md transition duration-300 hover:shadow-[0_0_42px_rgba(6,182,212,0.2)]`}
               >
                 <div
-                  className={`mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full text-4xl ${prize.iconBg} ${prize.iconShadow}`}
+                  className={`mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full text-3xl ${prize.iconBg} ${prize.iconShadow}`}
                 >
                   {prize.icon}
                 </div>
-                <p className="text-lg text-slate-400">{prize.label}</p>
-                <h3 className="text-4xl font-extrabold text-slate-100 mt-1">{prize.title}</h3>
-                <p className="mt-4 text-5xl font-black text-cyan-300 drop-shadow-[0_0_18px_rgba(45,212,191,0.35)]">
+                <p className="text-base text-slate-400">{prize.label}</p>
+                <h3 className="text-3xl font-extrabold text-slate-100 mt-1">{prize.title}</h3>
+                <p className="mt-3 text-4xl sm:text-5xl md:text-[3.35rem] font-black text-cyan-300 drop-shadow-[0_0_18px_rgba(45,212,191,0.35)]">
                   {prize.amount}
                 </p>
-                <div className="mx-auto mt-5 h-1.5 w-20 rounded-full bg-cyan-300/90" />
+                <div className="mx-auto mt-4 h-1.5 w-16 rounded-full bg-cyan-300/90" />
               </motion.div>
             ))}
           </div>
@@ -508,7 +508,7 @@ export default function Home() {
       </section>
 
       {/* ==================== FAQ SECTION ==================== */}
-      <section id="faq" className="relative py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/20 to-black">
+      <section id="faq" className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/20 to-black">
         <div className="max-w-4xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -561,7 +561,7 @@ export default function Home() {
       </section>
 
       {/* ==================== REGISTRATION CTA ==================== */}
-      <section className="relative py-16 md:py-24 px-4 md:px-8 bg-black">
+      <section className="relative py-14 md:py-20 px-4 md:px-8 bg-black">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -594,7 +594,7 @@ export default function Home() {
       </section>
 
       {/* ==================== SPONSORS SECTION ==================== */}
-      <section className="relative py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/20 to-black">
+      <section className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-black via-slate-950/20 to-black">
         <div className="max-w-6xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -627,7 +627,7 @@ export default function Home() {
       {/* ==================== FOOTER ==================== */}
       <footer id="footer" className="relative border-t border-cyan-500/30 bg-black px-4 md:px-8 py-12 md:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
             {/* ABOUT */}
             <div>
               <h3 className="text-base md:text-lg font-bold text-cyan-300 mb-3 md:mb-4">NAVONMESH</h3>
