@@ -20,6 +20,9 @@ export default function ParticlesBackground() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    
+    const canvasRef = canvas as HTMLCanvasElement;
+    const ctxRef = ctx as CanvasRenderingContext2D;
 
     let dpr = Math.max(1, window.devicePixelRatio || 1);
     let width = 0;
@@ -40,14 +43,14 @@ export default function ParticlesBackground() {
     };
 
     function resize() {
-      const rect = canvas.getBoundingClientRect();
+      const rect = canvasRef.getBoundingClientRect();
       width = Math.max(300, Math.floor(rect.width));
       height = Math.max(150, Math.floor(rect.height));
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvasRef.width = Math.floor(width * dpr);
+      canvasRef.height = Math.floor(height * dpr);
+      canvasRef.style.width = `${width}px`;
+      canvasRef.style.height = `${height}px`;
+      ctxRef.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const areaFactor = (width * height) / (1366 * 768);
       const count = Math.max(24, Math.round(config.baseCount * areaFactor));
@@ -70,11 +73,11 @@ export default function ParticlesBackground() {
       lastTime = now;
 
       // subtle background clear for trailing glow
-      ctx.clearRect(0, 0, width, height);
+      ctxRef.clearRect(0, 0, width, height);
 
       // draw links
-      ctx.save();
-      ctx.globalCompositeOperation = "brighter";
+      ctxRef.save();
+      ctxRef.globalCompositeOperation = "lighter";
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
@@ -86,18 +89,18 @@ export default function ParticlesBackground() {
             const t = 1 - dist / config.linkDistance;
             const alpha = Math.min(0.8, t * 0.48 * ((a.alpha + b.alpha) / 2));
             const linkAlpha = Math.min(1, alpha * 2.5);
-            ctx.beginPath();
-            ctx.lineWidth = config.linkWidth;
-            ctx.strokeStyle = `rgba(96,165,250,${linkAlpha})`;
-            ctx.shadowColor = `rgba(96,165,250,${linkAlpha})`;
-            ctx.shadowBlur = 22 * t + 5;
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
+            ctxRef.beginPath();
+            ctxRef.lineWidth = config.linkWidth;
+            ctxRef.strokeStyle = `rgba(96,165,250,${linkAlpha})`;
+            ctxRef.shadowColor = `rgba(96,165,250,${linkAlpha})`;
+            ctxRef.shadowBlur = 22 * t + 5;
+            ctxRef.moveTo(a.x, a.y);
+            ctxRef.lineTo(b.x, b.y);
+            ctxRef.stroke();
           }
         }
       }
-      ctx.restore();
+      ctxRef.restore();
 
       // draw particles
       for (let i = 0; i < particles.length; i++) {
@@ -115,28 +118,28 @@ export default function ParticlesBackground() {
         if (p.y < -10) p.y = height + 10;
         if (p.y > height + 10) p.y = -10;
 
-        ctx.beginPath();
+        ctxRef.beginPath();
         const fillAlpha = Math.min(1, 1.02 * p.alpha + 0.24);
-        ctx.fillStyle = `rgba(${p.color},${fillAlpha})`;
-        ctx.shadowColor = `rgba(${p.color},${Math.min(1, fillAlpha)})`;
-        ctx.shadowBlur = 30;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        ctxRef.fillStyle = `rgba(${p.color},${fillAlpha})`;
+        ctxRef.shadowColor = `rgba(${p.color},${Math.min(1, fillAlpha)})`;
+        ctxRef.shadowBlur = 30;
+        ctxRef.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctxRef.fill();
 
         // bright core so dots stay visibly luminous on all dark sections
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255,255,255,${Math.min(0.9, fillAlpha * 0.8)})`;
-        ctx.shadowColor = `rgba(255,255,255,${Math.min(0.95, fillAlpha)})`;
-        ctx.shadowBlur = 10;
-        ctx.arc(p.x, p.y, Math.max(0.55, p.r * 0.45), 0, Math.PI * 2);
-        ctx.fill();
+        ctxRef.beginPath();
+        ctxRef.fillStyle = `rgba(255,255,255,${Math.min(0.9, fillAlpha * 0.8)})`;
+        ctxRef.shadowColor = `rgba(255,255,255,${Math.min(0.95, fillAlpha)})`;
+        ctxRef.shadowBlur = 10;
+        ctxRef.arc(p.x, p.y, Math.max(0.55, p.r * 0.45), 0, Math.PI * 2);
+        ctxRef.fill();
         // subtle outer halo stroke for extra glow
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(${p.color},${0.24 * fillAlpha})`;
-        ctx.lineWidth = 1.7;
-        ctx.shadowBlur = 18;
-        ctx.arc(p.x, p.y, p.r + 1.2, 0, Math.PI * 2);
-        ctx.stroke();
+        ctxRef.beginPath();
+        ctxRef.strokeStyle = `rgba(${p.color},${0.24 * fillAlpha})`;
+        ctxRef.lineWidth = 1.7;
+        ctxRef.shadowBlur = 18;
+        ctxRef.arc(p.x, p.y, p.r + 1.2, 0, Math.PI * 2);
+        ctxRef.stroke();
       }
 
       raf = requestAnimationFrame(step);
@@ -160,7 +163,7 @@ export default function ParticlesBackground() {
   return (
     <canvas
       ref={ref}
-      className="pointer-events-none fixed inset-0 z-0"
+      className="pointer-events-none fixed inset-0 -z-10"
       style={{
         width: "100%",
         height: "100%",

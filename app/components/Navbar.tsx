@@ -7,6 +7,7 @@ import Image from "next/image";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const registrationFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScl1YbcLNNJl_we0kAl8u0wXcx-mH3imTXoq9SlcJBlq74a7Q/viewform";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,9 +28,9 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
+    { label: "Domains", href: "#events" },
     { label: "Prizes", href: "#prizes" },
     { label: "Team", href: "#about" },
-    { label: "Domains", href: "#events" },
     { label: "Timeline", href: "#timeline" },
     { label: "Why Participate", href: "#about" },
     { label: "FAQ", href: "#faq" },
@@ -54,7 +55,7 @@ export default function Navbar() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2 md:gap-3 min-w-0"
           >
-            <Image src="/logo.png" alt="Navonmesh Logo" width={132} height={44} className="h-7 sm:h-8 md:h-9 w-auto object-contain" />
+            <Image src="/navon.png" alt="Navon Logo" width={168} height={66} className="h-9 sm:h-10 md:h-11 w-auto object-contain" />
           </motion.div>
 
           {/* DESKTOP NAV LINKS */}
@@ -72,10 +73,15 @@ export default function Navbar() {
 
           {/* DESKTOP CTA */}
           <div className="hidden md:flex items-center gap-2.5">
-            <button className="px-4 lg:px-7 py-2 rounded-xl border border-cyan-300/80 text-cyan-200 text-[0.68rem] lg:text-xs font-bold tracking-[0.14em] uppercase bg-cyan-400/5 hover:bg-cyan-400/10 hover:shadow-[0_0_24px_rgba(34,211,238,0.35)] transition duration-300">
-              Submission Templates
-            </button>
-            <button className="px-4 lg:px-7 py-2 rounded-xl border border-cyan-200/35 text-slate-900 text-[0.68rem] lg:text-xs font-extrabold tracking-[0.11em] uppercase bg-gradient-to-r from-cyan-300 to-teal-300 hover:brightness-105 hover:shadow-[0_0_30px_rgba(45,212,191,0.45)] transition duration-300">
+            <a
+              href={registrationFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-10 px-4 lg:px-7 rounded-xl border border-cyan-300/80 text-cyan-200 text-[0.68rem] lg:text-xs font-bold leading-none tracking-[0.14em] uppercase bg-cyan-400/5 hover:bg-cyan-400/10 hover:shadow-[0_0_24px_rgba(34,211,238,0.35)] transition duration-300 inline-flex items-center justify-center"
+            >
+             Register Now
+            </a>
+            <button className="h-10 px-4 lg:px-7 rounded-xl border border-cyan-200/35 text-slate-900 text-[0.68rem] lg:text-xs font-extrabold leading-none tracking-[0.11em] uppercase bg-gradient-to-r from-cyan-300 to-teal-300 hover:brightness-105 hover:shadow-[0_0_30px_rgba(45,212,191,0.45)] transition duration-300 inline-flex items-center justify-center">
               Brochure & Rulebook
             </button>
           </div>
@@ -121,14 +127,20 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-sm text-slate-300 hover:text-cyan-300 transition font-semibold py-2.5 tracking-wide border-b border-cyan-500/10"
+                className="text-sm text-slate-300 hover:text-cyan-300 transition font-semibold py-2 tracking-wide"
               >
                 {link.label}
               </a>
             ))}
-            <button className="w-full mt-3 px-6 py-3 rounded-xl border border-cyan-300/80 text-cyan-100 font-bold tracking-wider uppercase bg-cyan-500/10 hover:bg-cyan-500/20 transition duration-300">
-              Submission Templates
-            </button>
+            <a
+              href={registrationFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full mt-3 px-6 py-3 rounded-xl border border-cyan-300/80 text-cyan-100 font-bold tracking-wider uppercase bg-cyan-500/10 hover:bg-cyan-500/20 transition duration-300 inline-flex items-center justify-center"
+            >
+             Register now
+            </a>
             <button className="w-full px-6 py-3 rounded-xl text-slate-900 font-extrabold tracking-wide uppercase bg-gradient-to-r from-cyan-300 to-teal-300 hover:brightness-105 transition duration-300">
               Brochure & Rulebook
             </button>
