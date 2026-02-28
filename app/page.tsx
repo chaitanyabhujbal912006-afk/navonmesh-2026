@@ -420,26 +420,6 @@ export default function Home() {
       )}
       {showParticles && <ParticlesBackground quality={particleQuality} />}
       <Navbar />
-      {isMobileViewport && (
-        <motion.div
-          initial={{ y: -24, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.75, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed left-1/2 top-[4.4rem] z-[95] -translate-x-1/2 md:hidden"
-        >
-          <div className="flex items-center gap-2 rounded-full border border-cyan-300/45 bg-[#041327]/85 px-3 py-1.5 backdrop-blur-xl shadow-[0_0_22px_rgba(34,211,238,0.22)]">
-            <motion.span
-              animate={{ opacity: [0.45, 1, 0.45], scale: [0.9, 1.15, 0.9] }}
-              transition={{ duration: 1.2, repeat: Infinity }}
-              className="h-1.5 w-1.5 rounded-full bg-cyan-200"
-            />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/95">
-              Live Mobile Experience
-            </span>
-          </div>
-        </motion.div>
-      )}
-
       <motion.div
         initial={{ y: 120, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
