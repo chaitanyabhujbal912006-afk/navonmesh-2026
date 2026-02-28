@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -101,52 +101,81 @@ export default function Navbar() {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
             </svg>
           </motion.button>
         </div>
       </nav>
 
       {/* MOBILE MENU */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.2 }}
-          className="fixed top-14 left-0 right-0 bottom-0 z-40 md:hidden bg-[#010611]/95 backdrop-blur-xl border-b border-cyan-500/20 overflow-y-auto"
-        >
-          <div className="max-w-7xl mx-auto px-4 py-5 pb-8 flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-sm text-slate-300 hover:text-cyan-300 transition font-semibold py-2 tracking-wide"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href={registrationFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full mt-3 px-6 py-3 rounded-xl border border-cyan-300/80 text-cyan-100 font-bold tracking-wider uppercase bg-cyan-500/10 hover:bg-cyan-500/20 transition duration-300 inline-flex items-center justify-center"
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-14 left-0 right-0 bottom-0 z-40 md:hidden overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_4%,rgba(34,211,238,0.28),transparent_30%),radial-gradient(circle_at_92%_10%,rgba(59,130,246,0.24),transparent_35%),linear-gradient(180deg,rgba(1,5,16,0.96),rgba(1,8,20,0.98))]" />
+            <div className="pointer-events-none absolute inset-0 opacity-[0.18] bg-[linear-gradient(rgba(125,211,252,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,0.2)_1px,transparent_1px)] bg-[size:64px_64px]" />
+            <motion.div
+              initial={{ y: -18, scale: 0.98, opacity: 0 }}
+              animate={{ y: 0, scale: 1, opacity: 1 }}
+              exit={{ y: -10, scale: 0.98, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative h-full overflow-y-auto px-4 pt-5 pb-8"
             >
-             Register now
-            </a>
-            <button className="w-full px-6 py-3 rounded-xl text-slate-900 font-extrabold tracking-wide uppercase bg-gradient-to-r from-cyan-300 to-teal-300 hover:brightness-105 transition duration-300">
-              Brochure & Rulebook
-            </button>
-          </div>
-        </motion.div>
-      )}
+              <div className="mx-auto max-w-2xl rounded-2xl border border-cyan-400/35 bg-[linear-gradient(180deg,rgba(3,12,27,0.92),rgba(1,8,20,0.92))] p-3 shadow-[0_0_45px_rgba(6,182,212,0.2)] backdrop-blur-xl">
+                <div className="mb-2 px-2 pt-1 pb-2 text-[10px] uppercase tracking-[0.28em] text-cyan-300/80">
+                  Navigate
+                </div>
+                <div className="space-y-2">
+                  {navLinks.map((link, idx) => (
+                    <motion.a
+                      key={link.label}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      initial={{ opacity: 0, x: -18 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.04 }}
+                      className="group flex items-center justify-between rounded-xl border border-cyan-500/30 bg-cyan-500/[0.07] px-3.5 py-3 text-slate-200 transition hover:border-cyan-300/70 hover:bg-cyan-400/15"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-cyan-400/50 bg-cyan-500/15 text-[11px] font-black tracking-wide text-cyan-200">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-[15px] font-semibold tracking-[0.05em]">{link.label}</span>
+                      </div>
+                      <svg className="h-4 w-4 text-cyan-300 transition group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </motion.a>
+                  ))}
+                </div>
+                <div className="mt-4 grid gap-2.5">
+                  <a
+                    href={registrationFormUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="inline-flex w-full items-center justify-center rounded-xl border border-cyan-300/85 bg-cyan-500/15 px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-cyan-100 shadow-[0_0_24px_rgba(34,211,238,0.2)] transition hover:bg-cyan-500/25"
+                  >
+                    Register Now
+                  </a>
+                  <button className="inline-flex w-full items-center justify-center rounded-xl border border-cyan-100/20 bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 px-6 py-3.5 text-sm font-black uppercase tracking-[0.1em] text-[#021126] shadow-[0_0_28px_rgba(45,212,191,0.3)] transition hover:brightness-110">
+                    Brochure & Rulebook
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
