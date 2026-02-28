@@ -12,7 +12,11 @@ type Particle = {
   color: string;
 };
 
-export default function ParticlesBackground() {
+type ParticlesBackgroundProps = {
+  quality?: "low" | "high";
+};
+
+export default function ParticlesBackground({ quality = "high" }: ParticlesBackgroundProps) {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -24,20 +28,24 @@ export default function ParticlesBackground() {
     const canvasRef = canvas as HTMLCanvasElement;
     const ctxRef = ctx as CanvasRenderingContext2D;
 
-    let dpr = Math.max(1, window.devicePixelRatio || 1);
+    const isLowQuality = quality === "low";
+    let dpr = Math.min(isLowQuality ? 1 : 1.5, Math.max(1, window.devicePixelRatio || 1));
     let width = 0;
     let height = 0;
     let particles: Particle[] = [];
     let raf = 0;
     let lastTime = performance.now();
+    let isVisible = !document.hidden;
+    let accumulator = 0;
+    const frameStep = 1000 / (isLowQuality ? 22 : 30);
 
     const config = {
-      baseCount: 56,
+      baseCount: isLowQuality ? 20 : 42,
       minRadius: 1.2,
-      maxRadius: 3.4,
-      maxSpeed: 0.22,
-      linkDistance: 155,
-      linkWidth: 1.15,
+      maxRadius: isLowQuality ? 2.4 : 3.1,
+      maxSpeed: isLowQuality ? 0.12 : 0.18,
+      linkDistance: isLowQuality ? 96 : 130,
+      linkWidth: isLowQuality ? 0.8 : 1.0,
       bgAlpha: 0.0,
       palette: ["125,249,255", "147,197,253", "96,165,250", "129,140,248"],
     };
@@ -69,8 +77,21 @@ export default function ParticlesBackground() {
     }
 
     function step(now: number) {
-      const dt = Math.min(40, now - lastTime) / 16.6667; // normalize to ~60fps
+      const delta = Math.min(60, now - lastTime);
       lastTime = now;
+
+      if (!isVisible) {
+        raf = requestAnimationFrame(step);
+        return;
+      }
+
+      accumulator += delta;
+      if (accumulator < frameStep) {
+        raf = requestAnimationFrame(step);
+        return;
+      }
+      const dt = accumulator / 16.6667; // normalize to ~60fps
+      accumulator = 0;
 
       // subtle background clear for trailing glow
       ctxRef.clearRect(0, 0, width, height);
@@ -78,25 +99,27 @@ export default function ParticlesBackground() {
       // draw links
       ctxRef.save();
       ctxRef.globalCompositeOperation = "lighter";
-      for (let i = 0; i < particles.length; i++) {
-        const a = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < config.linkDistance) {
-            const t = 1 - dist / config.linkDistance;
-            const alpha = Math.min(0.8, t * 0.48 * ((a.alpha + b.alpha) / 2));
-            const linkAlpha = Math.min(1, alpha * 2.5);
-            ctxRef.beginPath();
-            ctxRef.lineWidth = config.linkWidth;
-            ctxRef.strokeStyle = `rgba(96,165,250,${linkAlpha})`;
-            ctxRef.shadowColor = `rgba(96,165,250,${linkAlpha})`;
-            ctxRef.shadowBlur = 22 * t + 5;
-            ctxRef.moveTo(a.x, a.y);
-            ctxRef.lineTo(b.x, b.y);
-            ctxRef.stroke();
+      if (!isLowQuality) {
+        for (let i = 0; i < particles.length; i++) {
+          const a = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const b = particles[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < config.linkDistance) {
+              const t = 1 - dist / config.linkDistance;
+              const alpha = Math.min(0.8, t * 0.48 * ((a.alpha + b.alpha) / 2));
+              const linkAlpha = Math.min(1, alpha * 2.5);
+              ctxRef.beginPath();
+              ctxRef.lineWidth = config.linkWidth;
+              ctxRef.strokeStyle = `rgba(96,165,250,${linkAlpha})`;
+              ctxRef.shadowColor = `rgba(96,165,250,${linkAlpha})`;
+              ctxRef.shadowBlur = 22 * t + 5;
+              ctxRef.moveTo(a.x, a.y);
+              ctxRef.lineTo(b.x, b.y);
+              ctxRef.stroke();
+            }
           }
         }
       }
@@ -146,19 +169,25 @@ export default function ParticlesBackground() {
     }
 
     const onResize = () => {
-      dpr = Math.max(1, window.devicePixelRatio || 1);
+      dpr = Math.min(isLowQuality ? 1 : 1.5, Math.max(1, window.devicePixelRatio || 1));
       resize();
+    };
+    const onVisibilityChange = () => {
+      isVisible = !document.hidden;
+      if (isVisible) lastTime = performance.now();
     };
 
     resize();
     raf = requestAnimationFrame(step);
     window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [quality]);
 
   return (
     <canvas

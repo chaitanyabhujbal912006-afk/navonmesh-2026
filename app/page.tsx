@@ -1,10 +1,11 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useViewportScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useSpring, useViewportScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import ParticlesBackground from "./ParticlesBackground";
+import AIBootSequence from "./components/AIBootSequence";
 
 type UiIcon =
   | "ai"
@@ -25,6 +26,9 @@ type UiIcon =
   | "x"
   | "instagram"
   | "linkedin"
+  | "youtube"
+  | "phone"
+  | "location"
   | "close";
 
 function renderIcon(icon: UiIcon, className: string) {
@@ -63,6 +67,12 @@ function renderIcon(icon: UiIcon, className: string) {
       return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>;
     case "linkedin":
       return <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 8.5H3.8V20h2.7V8.5zM5.1 7.3a1.6 1.6 0 100-3.2 1.6 1.6 0 000 3.2zM20.2 13.2c0-3-1.6-4.8-4.3-4.8-1.9 0-2.8 1-3.2 1.8V8.5H10V20h2.7v-6.2c0-1.6.3-3.1 2.3-3.1s2 1.8 2 3.2V20h2.7v-6.8z"/></svg>;
+    case "youtube":
+      return <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.9 2.9 0 00-2-2C17.8 4.7 12 4.7 12 4.7s-5.8 0-7.6.5a2.9 2.9 0 00-2 2A30 30 0 002 12a30 30 0 00.4 4.8 2.9 2.9 0 002 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.9 2.9 0 002-2A30 30 0 0022 12a30 30 0 00-.4-4.8zM10 15.5v-7l6 3.5-6 3.5z"/></svg>;
+    case "phone":
+      return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"><path strokeLinecap="round" strokeLinejoin="round" d="M4.8 3.8a1.5 1.5 0 011.6-.4l3.2 1a1.5 1.5 0 011 .9l.7 2.4a1.5 1.5 0 01-.4 1.5l-1.4 1.4a13.8 13.8 0 005.6 5.6l1.4-1.4a1.5 1.5 0 011.5-.4l2.4.7a1.5 1.5 0 01.9 1l1 3.2a1.5 1.5 0 01-.4 1.6l-1.6 1.6a3 3 0 01-2.8.8A20 20 0 014.4 8.2a3 3 0 01.8-2.8l1.6-1.6z" /></svg>;
+    case "location":
+      return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21s6-5.6 6-11a6 6 0 10-12 0c0 5.4 6 11 6 11z" /><circle cx="12" cy="10" r="2.2" fill="currentColor" stroke="none" /></svg>;
     case "close":
       return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" /></svg>;
     default:
@@ -257,8 +267,15 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<(typeof events)[number] | null>(null);
   const [showMoreEventDetails, setShowMoreEventDetails] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
-  const [introPhase, setIntroPhase] = useState<"boot" | "sync" | "flash">("boot");
   const [reduceHeavyEffects, setReduceHeavyEffects] = useState(true);
+  const [particleQuality, setParticleQuality] = useState<"low" | "high">("high");
+  const [showParticles, setShowParticles] = useState(true);
+  const pointerX = useMotionValue(-320);
+  const pointerY = useMotionValue(-320);
+  const smoothPointerX = useSpring(pointerX, { stiffness: 120, damping: 24, mass: 0.35 });
+  const smoothPointerY = useSpring(pointerY, { stiffness: 120, damping: 24, mass: 0.35 });
+  const pointerGlow = useMotionTemplate`radial-gradient(440px circle at ${smoothPointerX}px ${smoothPointerY}px, rgba(56,189,248,0.17), transparent 62%)`;
+  const pointerCore = useMotionTemplate`radial-gradient(190px circle at ${smoothPointerX}px ${smoothPointerY}px, rgba(45,212,191,0.18), transparent 68%)`;
   const registrationFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScl1YbcLNNJl_we0kAl8u0wXcx-mH3imTXoq9SlcJBlq74a7Q/viewform";
 
   const openEventDetails = (event: (typeof events)[number]) => {
@@ -274,6 +291,8 @@ export default function Home() {
       const smallViewport = window.matchMedia("(max-width: 768px)").matches;
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       setReduceHeavyEffects(saveData || slowNetwork || smallViewport || prefersReducedMotion);
+      setParticleQuality(saveData || slowNetwork || smallViewport ? "low" : "high");
+      setShowParticles(!prefersReducedMotion);
     };
 
     evaluateDevice();
@@ -296,16 +315,11 @@ export default function Home() {
     }
 
     setShowIntro(true);
-    const syncTimer = window.setTimeout(() => setIntroPhase("sync"), 520);
-    const flashTimer = window.setTimeout(() => setIntroPhase("flash"), 1850);
     const finishTimer = window.setTimeout(() => {
       window.sessionStorage.setItem("navonmesh_intro_seen", "1");
-      setShowIntro(false);
-    }, 2480);
+    }, 6000);
 
     return () => {
-      window.clearTimeout(syncTimer);
-      window.clearTimeout(flashTimer);
       window.clearTimeout(finishTimer);
     };
   }, []);
@@ -328,6 +342,30 @@ export default function Home() {
     };
   }, [selectedEvent]);
 
+  useEffect(() => {
+    if (reduceHeavyEffects) {
+      pointerX.set(-320);
+      pointerY.set(-320);
+      return;
+    }
+
+    const handleMove = (event: MouseEvent) => {
+      pointerX.set(event.clientX);
+      pointerY.set(event.clientY);
+    };
+    const handleLeave = () => {
+      pointerX.set(-320);
+      pointerY.set(-320);
+    };
+
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    window.addEventListener("mouseleave", handleLeave);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseleave", handleLeave);
+    };
+  }, [pointerX, pointerY, reduceHeavyEffects]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -345,92 +383,10 @@ export default function Home() {
     <main className="relative isolate min-h-screen bg-[#020914] text-white overflow-hidden">
       <AnimatePresence>
         {showIntro && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.02, filter: "blur(2px)" }}
-            transition={{ duration: 0.42, ease: "easeOut" }}
-            className="fixed inset-0 z-[3000] flex items-center justify-center overflow-hidden bg-black"
-          >
-            <motion.div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(56,189,248,0.2),transparent_46%),linear-gradient(180deg,#00050f_0%,#000208_100%)]"
-            />
-            <motion.div
-              aria-hidden="true"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.16 }}
-              transition={{ duration: 0.5 }}
-              className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(148,220,252,0.08)_0px,rgba(148,220,252,0.08)_1px,transparent_1px,transparent_5px)]"
-            />
-            <motion.div
-              aria-hidden="true"
-              initial={{ opacity: 0.18, rotate: 0 }}
-              animate={{ opacity: [0.16, 0.28, 0.16], rotate: 360 }}
-              transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-              className="pointer-events-none absolute h-[56vmin] w-[56vmin] rounded-full border border-cyan-300/30"
-            />
-            <motion.div
-              aria-hidden="true"
-              initial={{ opacity: 0.12, rotate: 0 }}
-              animate={{ opacity: [0.1, 0.22, 0.1], rotate: -360 }}
-              transition={{ duration: 6, ease: "linear", repeat: Infinity }}
-              className="pointer-events-none absolute h-[40vmin] w-[40vmin] rounded-full border border-cyan-200/25"
-            />
-            <motion.div
-              aria-hidden="true"
-              initial={{ x: "-35%", opacity: 0 }}
-              animate={{ x: introPhase === "sync" ? ["-35%", "120%"] : "-35%", opacity: introPhase === "sync" ? [0, 0.22, 0] : 0 }}
-              transition={{ duration: 0.95, ease: "easeInOut" }}
-              className="pointer-events-none absolute top-0 bottom-0 w-28 -skew-x-12 bg-gradient-to-r from-transparent via-cyan-200/20 to-transparent blur-md"
-            />
-            <motion.div
-              aria-hidden="true"
-              animate={{ opacity: introPhase === "flash" ? [0, 0.42, 0] : 0 }}
-              transition={{ duration: 0.34 }}
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(103,232,249,0.55),rgba(34,211,238,0.15)_40%,transparent_72%)] mix-blend-screen"
-            />
-
-            <div className="relative z-10 px-6 text-center">
-              <motion.p
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: introPhase === "boot" ? 0.85 : 0, y: 0 }}
-                transition={{ duration: 0.25 }}
-                className="mb-4 text-[10px] md:text-xs font-semibold uppercase tracking-[0.38em] text-cyan-200/80"
-              >
-                Initializing Experience
-              </motion.p>
-              <motion.h1
-                initial={{ opacity: 0, scale: 0.9, letterSpacing: "0.14em" }}
-                animate={{
-                  opacity: introPhase === "boot" ? 0 : 1,
-                  scale: introPhase === "sync" ? [0.9, 1.05, 1] : 1,
-                  letterSpacing: introPhase === "sync" ? ["0.14em", "0.08em"] : "0.08em",
-                }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="font-display text-4xl sm:text-6xl md:text-7xl font-black uppercase text-cyan-100 drop-shadow-[0_0_24px_rgba(34,211,238,0.55)]"
-              >
-                NAVONMESH
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: introPhase === "sync" ? 0.9 : 0 }}
-                transition={{ duration: 0.25 }}
-                className="mt-4 text-[10px] md:text-xs uppercase tracking-[0.32em] text-cyan-200/75"
-              >
-                Loading Interface
-              </motion.p>
-              <div className="mx-auto mt-6 flex items-center justify-center gap-2">
-                {[0, 1, 2].map((dot) => (
-                  <motion.span
-                    key={dot}
-                    animate={{ opacity: introPhase === "sync" ? [0.25, 1, 0.25] : 0.25, scale: introPhase === "sync" ? [0.9, 1.2, 0.9] : 1 }}
-                    transition={{ duration: 0.7, repeat: Infinity, delay: dot * 0.12 }}
-                    className="h-1.5 w-1.5 rounded-full bg-cyan-300/80"
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          <AIBootSequence 
+            onComplete={() => setShowIntro(false)}
+            eventTitle="NAVONMESH 2026"
+          />
         )}
       </AnimatePresence>
 
@@ -439,7 +395,14 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.14] bg-[linear-gradient(rgba(125,211,252,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,0.2)_1px,transparent_1px)] bg-[size:88px_88px] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_100%)]" />
         <div className="absolute -inset-12 animate-bgDrift bg-[radial-gradient(circle_at_28%_38%,rgba(45,212,191,0.18),transparent_30%),radial-gradient(circle_at_72%_64%,rgba(56,189,248,0.14),transparent_28%)]" />
       </div>
-      {!reduceHeavyEffects && <ParticlesBackground />}
+      {!reduceHeavyEffects && <div className="scifi-ambient" aria-hidden="true" />}
+      {!reduceHeavyEffects && (
+        <div className="pointer-events-none fixed inset-0 z-0">
+          <motion.div className="absolute inset-0 mix-blend-screen" style={{ background: pointerGlow }} />
+          <motion.div className="absolute inset-0 mix-blend-screen" style={{ background: pointerCore }} />
+        </div>
+      )}
+      {showParticles && <ParticlesBackground quality={particleQuality} />}
       <Navbar />
 
       {/* ==================== HERO SECTION ==================== */}
@@ -644,7 +607,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
-              NAVONMESH is India's premier university technology festival, uniting 6,000+ innovators and creators. 
+              NAVONMESH is India&apos;s premier university technology festival, uniting 6,000+ innovators and creators.
               Compete across 6+ events, win ₹3+ lakhs in prizes, and make your mark on the tech world.
             </p>
           </motion.div>
@@ -661,14 +624,20 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
+                whileHover={{
+                  y: -10,
+                  scale: 1.012,
+                  transition: { type: "spring", stiffness: 220, damping: 22, mass: 0.7 },
+                }}
                 viewport={{ once: true }}
-                className="group cyber-card p-6 md:p-8 rounded-2xl backdrop-blur-sm border border-cyan-500/30 hover:border-cyan-300/70 transition duration-300 hover:shadow-xl hover:shadow-cyan-500/10"
+                className="group cyber-card p-6 md:p-8 rounded-2xl backdrop-blur-sm border border-cyan-500/30 transform-gpu transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hover:border-cyan-200/80 md:hover:shadow-[0_22px_58px_rgba(6,182,212,0.24)]"
               >
-                <div className="mb-4 text-cyan-300 group-hover:scale-110 transition duration-300">
+                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-700 ease-out md:group-hover:opacity-100 bg-[radial-gradient(circle_at_12%_18%,rgba(34,211,238,0.18),transparent_45%),linear-gradient(180deg,rgba(8,18,34,0.08),rgba(8,18,34,0.02))]" />
+                <div className="mb-4 text-cyan-300 transform-gpu transition-all duration-500 ease-out md:group-hover:-translate-y-0.5 md:group-hover:text-cyan-200">
                   {renderIcon(item.icon, "h-10 w-10 md:h-12 md:w-12")}
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-cyan-300 mb-2">{item.title}</h3>
-                <p className="text-sm md:text-base text-gray-400">{item.desc}</p>
+                <h3 className="text-lg md:text-xl font-bold text-cyan-300 mb-2 transition-colors duration-500 ease-out md:group-hover:text-cyan-100">{item.title}</h3>
+                <p className="text-sm md:text-base text-gray-400 transition-colors duration-500 ease-out md:group-hover:text-slate-200">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -775,117 +744,121 @@ export default function Home() {
           </motion.div>
 
         </div>
-
-        {selectedEvent && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-x-0 top-16 bottom-0 z-[999] bg-black/75 backdrop-blur-sm p-3 md:p-6 lg:p-8 flex items-start justify-center overflow-y-auto"
-            onClick={() => setSelectedEvent(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.25 }}
-              className="relative z-[1000] my-0 w-full max-w-3xl max-h-[calc(100svh-6rem)] rounded-2xl border border-cyan-400/40 bg-[#020812] shadow-[0_0_50px_rgba(34,211,238,0.2)] overflow-hidden flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative h-28 sm:h-32 md:h-40 flex-shrink-0">
-                <img
-                  src={selectedEvent.image}
-                  alt={selectedEvent.name}
-                  loading="eager"
-                  decoding="async"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = "/navon.png";
-                  }}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#020812]/40 to-transparent" />
-                <button
-                  onClick={() => setSelectedEvent(null)}
-                  className="absolute top-4 right-4 h-9 w-9 rounded-full border border-cyan-200/80 bg-[#020812]/90 text-cyan-100 shadow-[0_0_16px_rgba(34,211,238,0.35)] hover:bg-cyan-500/25 transition"
-                  aria-label="Close event details"
-                >
-                  {renderIcon("close", "h-4 w-4 mx-auto")}
-                </button>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-xs md:text-sm text-cyan-300/90 uppercase tracking-[0.2em]">{selectedEvent.category}</p>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-display font-bold text-white">{selectedEvent.name}</h3>
-                </div>
-              </div>
-
-              <div className="overflow-y-auto p-3.5 md:p-4 space-y-3">
-                <p className="text-sm md:text-base text-gray-300 leading-relaxed">{selectedEvent.details}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-                  <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Prize Pool</p>
-                    <p className="text-base font-semibold text-white">{selectedEvent.prize}</p>
-                  </div>
-                  <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Fees</p>
-                    <p className="text-base font-semibold text-white">{selectedEvent.fee}</p>
-                  </div>
-                  <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Team Size</p>
-                    <p className="text-base font-semibold text-white">{selectedEvent.teamSize}</p>
-                  </div>
-                  <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Mode</p>
-                    <p className="text-base font-semibold text-white">{selectedEvent.mode}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedEvent.highlights.map((highlight) => (
-                    <span
-                      key={highlight}
-                      className="rounded-full border border-cyan-400/40 bg-cyan-500/10 px-3 py-1 text-xs md:text-sm text-cyan-200"
-                    >
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-
-                <button
-                  onClick={() => setShowMoreEventDetails((prev) => !prev)}
-                  className="inline-flex items-center rounded-lg border border-cyan-400/50 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-500/20 transition"
-                >
-                  {showMoreEventDetails ? "Hide Full Details" : "More Details"}
-                </button>
-
-                {showMoreEventDetails && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Schedule</p>
-                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.schedule}</p>
-                    </div>
-                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Venue</p>
-                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.venue}</p>
-                    </div>
-                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Eligibility</p>
-                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.eligibility}</p>
-                    </div>
-                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Registration Deadline</p>
-                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.deadline}</p>
-                    </div>
-                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Requirements</p>
-                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.requirements}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
       </section>
 
+
+      {selectedEvent && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-x-0 top-16 bottom-0 z-[999] bg-black/75 backdrop-blur-sm p-3 md:p-6 lg:p-8 flex items-start justify-center overflow-y-auto"
+          onClick={() => setSelectedEvent(null)}
+        >
+          <motion.div
+            initial={{ scale: 0.92, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.25 }}
+            className="relative z-[1000] my-0 w-full max-w-3xl max-h-[calc(100svh-6rem)] rounded-2xl border border-cyan-400/40 bg-[#020812] shadow-[0_0_50px_rgba(34,211,238,0.2)] overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative h-28 sm:h-32 md:h-40 flex-shrink-0">
+              <img
+                src={selectedEvent.image}
+                alt={selectedEvent.name}
+                loading="eager"
+                decoding="async"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "/navon.png";
+                }}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#020812]/40 to-transparent" />
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="absolute top-4 right-4 h-9 w-9 rounded-full border border-cyan-200/80 bg-[#020812]/90 text-cyan-100 shadow-[0_0_16px_rgba(34,211,238,0.35)] hover:bg-cyan-500/25 transition"
+                aria-label="Close event details"
+              >
+                {renderIcon("close", "h-4 w-4 mx-auto")}
+              </button>
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-xs md:text-sm text-cyan-300/90 uppercase tracking-[0.2em]">{selectedEvent.category}</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-display font-bold text-white">{selectedEvent.name}</h3>
+              </div>
+            </div>
+
+            <div className="overflow-y-auto p-3.5 md:p-4 space-y-3">
+              <p className="text-sm md:text-base text-gray-300 leading-relaxed">{selectedEvent.details}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Prize Pool</p>
+                  <p className="text-base font-semibold text-white">{selectedEvent.prize}</p>
+                </div>
+                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Fees</p>
+                  <p className="text-base font-semibold text-white">{selectedEvent.fee}</p>
+                </div>
+                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Team Size</p>
+                  <p className="text-base font-semibold text-white">{selectedEvent.teamSize}</p>
+                </div>
+                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Mode</p>
+                  <p className="text-base font-semibold text-white">{selectedEvent.mode}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {selectedEvent.highlights.map((highlight) => (
+                  <span
+                    key={highlight}
+                    className="rounded-full border border-cyan-400/40 bg-cyan-500/10 px-3 py-1 text-xs md:text-sm text-cyan-200"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+
+              <button
+                onClick={() => setShowMoreEventDetails((prev) => !prev)}
+                className="inline-flex items-center rounded-lg border border-cyan-400/50 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-500/20 transition"
+              >
+                {showMoreEventDetails ? "Hide Full Details" : "More Details"}
+              </button>
+
+              {showMoreEventDetails && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                  <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Schedule</p>
+                    <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.schedule}</p>
+                  </div>
+                  <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Venue</p>
+                    <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.venue}</p>
+                  </div>
+                  <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Eligibility</p>
+                    <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.eligibility}</p>
+                  </div>
+                  <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Registration Deadline</p>
+                    <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.deadline}</p>
+                  </div>
+                  <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Requirements</p>
+                    <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.requirements}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+
       {/* ==================== TIMELINE SECTION ==================== */}
-      <section id="timeline" className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-transparent via-slate-950/25 to-transparent">
+      <section
+        id="timeline"
+        className={`relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-transparent via-slate-950/25 to-transparent ${selectedEvent ? "z-0" : "z-[1]"}`}
+      >
         <div className="max-w-5xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -1077,7 +1050,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-base md:text-lg text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto">
-              Join 6000+ innovators. Secure your spot now and be part of India's premier tech fest.
+              Join 6000+ innovators. Secure your spot now and be part of India&apos;s premier tech fest.
             </p>
 
             <motion.a
@@ -1130,55 +1103,66 @@ export default function Home() {
       </section>
 
       {/* ==================== FOOTER ==================== */}
-      <footer id="footer" className="relative border-t border-cyan-500/30 bg-[#020a14]/80 px-4 md:px-8 py-12 md:py-16 backdrop-blur-[2px]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
-            {/* ABOUT */}
+      <footer
+        id="footer"
+        className="relative overflow-hidden border-t border-cyan-500/25 px-4 py-12 md:px-8 md:py-14"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(34,211,238,0.14),transparent_38%),radial-gradient(circle_at_85%_12%,rgba(59,130,246,0.14),transparent_42%),linear-gradient(180deg,#020913_0%,#01070f_48%,#020a14_100%)]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.18] bg-[linear-gradient(rgba(125,211,252,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,0.16)_1px,transparent_1px)] bg-[size:84px_84px]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.14] bg-[repeating-linear-gradient(180deg,rgba(148,220,252,0.08)_0px,rgba(148,220,252,0.08)_1px,transparent_1px,transparent_4px)]" />
+
+        <div className="mx-auto max-w-6xl">
+          <div className="relative grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-10">
             <div>
-              <h3 className="text-base md:text-lg font-bold text-cyan-300 mb-3 md:mb-4">NAVONMESH</h3>
-              <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
-                India's premier university technology festival celebrating innovation and excellence.
+              <h3 className="font-display text-3xl font-black uppercase tracking-[0.04em] text-cyan-300">
+                NAVONMESH
+              </h3>
+              <p className="mt-4 max-w-xs text-base leading-relaxed text-slate-400">
+                India&apos;s premier university technology festival celebrating innovation and excellence.
               </p>
             </div>
 
-            {/* QUICK LINKS */}
             <div>
-              <h4 className="text-sm md:text-base font-bold text-white mb-3 md:mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-xs md:text-sm text-gray-400">
-                <li className="hover:text-cyan-400 cursor-pointer transition">Events</li>
-                <li className="hover:text-cyan-400 cursor-pointer transition">Register</li>
-                <li className="hover:text-cyan-400 cursor-pointer transition">Timeline</li>
-                <li className="hover:text-cyan-400 cursor-pointer transition">Rules</li>
+              <h4 className="text-3xl font-bold text-white">Quick Links</h4>
+              <ul className="mt-4 space-y-2 text-base text-slate-400">
+                <li><a href="#events" className="transition hover:text-cyan-300">Events</a></li>
+                <li><a href={registrationFormUrl} target="_blank" rel="noopener noreferrer" className="transition hover:text-cyan-300">Register</a></li>
+                <li><a href="#timeline" className="transition hover:text-cyan-300">Timeline</a></li>
+                <li><a href="#footer" className="transition hover:text-cyan-300">Rules</a></li>
               </ul>
             </div>
 
-            {/* CONTACT */}
             <div>
-              <h4 className="text-sm md:text-base font-bold text-white mb-3 md:mb-4">Contact</h4>
-              <p className="text-xs md:text-sm text-gray-400 mb-2">
-                Email: <span className="text-cyan-400">navonmesh@university.edu</span>
+              <h4 className="text-3xl font-bold text-white">Contact</h4>
+              <p className="mt-4 text-base leading-relaxed text-slate-400">
+                Email: <span className="text-cyan-300">navonmesh@university.edu</span>
               </p>
-              <p className="text-xs md:text-sm text-gray-400">Phone: +91 XXXX XXXX XX</p>
+              <p className="mt-2 text-base text-slate-400">
+                Phone: <span className="text-cyan-300">020 47200000</span>
+              </p>
+              <p className="mt-2 text-base leading-relaxed text-slate-400">
+                Address: Mukunddas Lohia Academic Complex, Behind BMCC, 182, Agaharkar Road, Shivajinagar, Pune 411 004
+              </p>
             </div>
 
-            {/* SOCIAL */}
             <div>
-              <h4 className="text-sm md:text-base font-bold text-white mb-3 md:mb-4">Follow</h4>
-              <div className="flex gap-3">
-                {(["facebook", "x", "instagram", "linkedin"] as UiIcon[]).map((social, idx) => (
-                  <div
-                    key={idx}
-                    className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-cyan-500/20 border border-cyan-500/50 flex items-center justify-center hover:bg-cyan-500/40 hover:border-cyan-400 transition cursor-pointer text-cyan-300 text-sm font-bold"
+              <h4 className="text-3xl font-bold text-white">Follow</h4>
+              <div className="mt-4 flex gap-3">
+                {(["facebook", "x", "instagram", "linkedin"] as UiIcon[]).map((social) => (
+                  <a
+                    key={social}
+                    href="#"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-500/55 bg-cyan-500/10 text-cyan-300 transition hover:bg-cyan-400/20 hover:text-cyan-100 hover:shadow-[0_0_22px_rgba(34,211,238,0.25)]"
+                    aria-label={social}
                   >
-                    {renderIcon(social, "h-4 w-4")}
-                  </div>
+                    {renderIcon(social, "h-5 w-5")}
+                  </a>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* DIVIDER */}
-          <div className="border-t border-cyan-500/20 pt-8 md:pt-8 text-center text-xs md:text-sm text-gray-500">
+          <div className="relative mt-10 border-t border-cyan-500/25 pt-7 text-center text-lg text-slate-500">
             <p>&copy; 2026 NAVONMESH. All rights reserved. Built by the organizing committee.</p>
           </div>
         </div>
