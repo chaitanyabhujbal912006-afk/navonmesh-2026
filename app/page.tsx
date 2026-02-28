@@ -267,6 +267,7 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<(typeof events)[number] | null>(null);
   const [showMoreEventDetails, setShowMoreEventDetails] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [reduceHeavyEffects, setReduceHeavyEffects] = useState(true);
   const [particleQuality, setParticleQuality] = useState<"low" | "high">("high");
   const [showParticles, setShowParticles] = useState(true);
@@ -290,6 +291,7 @@ export default function Home() {
       const slowNetwork = /(^|[^a-z])(2g|3g)([^a-z]|$)/i.test(connection?.effectiveType ?? "");
       const smallViewport = window.matchMedia("(max-width: 768px)").matches;
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setIsMobileViewport(smallViewport);
       setReduceHeavyEffects(saveData || slowNetwork || smallViewport || prefersReducedMotion);
       setParticleQuality(saveData || slowNetwork || smallViewport ? "low" : "high");
       setShowParticles(!prefersReducedMotion);
@@ -353,16 +355,30 @@ export default function Home() {
       pointerX.set(event.clientX);
       pointerY.set(event.clientY);
     };
+    const handleTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      pointerX.set(touch.clientX);
+      pointerY.set(touch.clientY);
+    };
     const handleLeave = () => {
       pointerX.set(-320);
       pointerY.set(-320);
     };
+    const handleTouchEnd = () => {
+      pointerX.set(window.innerWidth * 0.5);
+      pointerY.set(window.innerHeight * 0.78);
+    };
 
     window.addEventListener("mousemove", handleMove, { passive: true });
     window.addEventListener("mouseleave", handleLeave);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("mouseleave", handleLeave);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [pointerX, pointerY, reduceHeavyEffects]);
 
@@ -380,7 +396,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative isolate min-h-screen bg-[#020914] text-white overflow-hidden">
+    <main className="relative isolate min-h-screen overflow-hidden bg-[#020914] pb-24 text-white md:pb-0">
       <AnimatePresence>
         {showIntro && (
           <AIBootSequence 
@@ -404,6 +420,58 @@ export default function Home() {
       )}
       {showParticles && <ParticlesBackground quality={particleQuality} />}
       <Navbar />
+      {isMobileViewport && (
+        <motion.div
+          initial={{ y: -24, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.75, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed left-1/2 top-[4.4rem] z-[95] -translate-x-1/2 md:hidden"
+        >
+          <div className="flex items-center gap-2 rounded-full border border-cyan-300/45 bg-[#041327]/85 px-3 py-1.5 backdrop-blur-xl shadow-[0_0_22px_rgba(34,211,238,0.22)]">
+            <motion.span
+              animate={{ opacity: [0.45, 1, 0.45], scale: [0.9, 1.15, 0.9] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+              className="h-1.5 w-1.5 rounded-full bg-cyan-200"
+            />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/95">
+              Live Mobile Experience
+            </span>
+          </div>
+        </motion.div>
+      )}
+
+      <motion.div
+        initial={{ y: 120, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.9, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-x-3 bottom-3 z-[90] md:hidden"
+      >
+        <div className="relative overflow-hidden rounded-2xl border border-cyan-300/35 bg-[#041224]/88 p-2.5 shadow-[0_16px_42px_rgba(0,0,0,0.45),0_0_28px_rgba(34,211,238,0.2)] backdrop-blur-xl">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(34,211,238,0.2),transparent_45%),radial-gradient(circle_at_85%_100%,rgba(59,130,246,0.2),transparent_40%)]" />
+          <div className="relative grid grid-cols-4 gap-1.5">
+            {[
+              { label: "Events", href: "#events", icon: "target" as UiIcon },
+              { label: "Timeline", href: "#timeline", icon: "calendar" as UiIcon },
+              { label: "Prizes", href: "#prizes", icon: "award" as UiIcon },
+              { label: "Contact", href: "#footer", icon: "phone" as UiIcon },
+            ].map((item) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                whileTap={{ scale: 0.93 }}
+                className="group flex flex-col items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-1.5 py-2.5 text-center transition active:border-cyan-200/70 active:bg-cyan-400/20"
+              >
+                <span className="text-cyan-200 transition group-active:text-white">
+                  {renderIcon(item.icon, "h-4 w-4")}
+                </span>
+                <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-100/90">
+                  {item.label}
+                </span>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </motion.div>
 
       {/* ==================== HERO SECTION ==================== */}
       <section
@@ -435,9 +503,26 @@ export default function Home() {
           transition={{ duration: 1.2, delay: 0.35 }}
           className="pointer-events-none absolute -right-14 bottom-16 h-56 w-56 rounded-full bg-blue-400/20 blur-3xl"
         />
+        <motion.div
+          aria-hidden="true"
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.15 }}
+          className="pointer-events-none absolute inset-x-3 top-24 bottom-20 rounded-[28px] border border-cyan-300/25 bg-[radial-gradient(circle_at_14%_10%,rgba(34,211,238,0.2),transparent_42%),radial-gradient(circle_at_86%_80%,rgba(59,130,246,0.2),transparent_38%),linear-gradient(180deg,rgba(4,17,36,0.56),rgba(2,10,22,0.48))] shadow-[0_0_45px_rgba(34,211,238,0.18)] md:hidden"
+        />
+        <motion.div
+          aria-hidden="true"
+          animate={{ opacity: [0.15, 0.35, 0.15], scale: [0.98, 1.03, 0.98] }}
+          transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[68vw] w-[68vw] -translate-x-1/2 -translate-y-[45%] rounded-full border border-cyan-300/30 blur-[0.5px] md:hidden"
+        />
+        <div className="pointer-events-none absolute inset-x-5 top-44 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent md:hidden" />
 
         {/* CONTENT */}
         <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20 text-center flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-screen">
+          <div className="pointer-events-none absolute inset-x-8 top-40 h-28 rounded-full bg-cyan-400/12 blur-3xl md:hidden" />
+          <div className="pointer-events-none absolute right-8 top-[42%] h-2.5 w-2.5 rounded-full bg-cyan-200/80 shadow-[0_0_15px_rgba(34,211,238,0.8)] md:hidden" />
+          <div className="pointer-events-none absolute left-8 top-[58%] h-2 w-2 rounded-full bg-blue-200/80 shadow-[0_0_14px_rgba(59,130,246,0.75)] md:hidden" />
           <motion.div
             initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -530,7 +615,7 @@ export default function Home() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-lg md:rounded-xl border border-cyan-500/35 bg-cyan-500/[0.08] px-2 py-2 md:px-3 md:py-2.5 backdrop-blur-sm"
+                className="rounded-lg md:rounded-xl border border-cyan-500/35 bg-cyan-500/[0.08] px-2 py-2 md:px-3 md:py-2.5 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_0_18px_rgba(6,182,212,0.16)]"
               >
                 <p className="text-[9px] md:text-[10px] uppercase tracking-[0.16em] text-cyan-200/85">{stat.label}</p>
                 <p className="mt-0.5 text-sm md:text-base font-black text-white">{stat.value}</p>
@@ -549,16 +634,17 @@ export default function Home() {
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.95 }}
               href="#events"
-              className="group relative overflow-hidden glass-sm w-full sm:w-auto px-8 md:px-10 py-3 md:py-4 rounded-xl border border-cyan-300/70 text-cyan-100 text-sm md:text-base font-bold tracking-[0.08em] uppercase hover:bg-cyan-500/15 hover:shadow-[0_0_24px_rgba(34,211,238,0.28)] transition duration-300 text-center"
+              className="group relative overflow-hidden glass-sm w-full sm:w-auto px-8 md:px-10 py-3 md:py-4 rounded-xl border border-cyan-300/70 text-cyan-100 text-sm md:text-base font-bold tracking-[0.08em] uppercase hover:bg-cyan-500/15 hover:shadow-[0_0_24px_rgba(34,211,238,0.28)] transition duration-300 text-center active:scale-[0.98] active:brightness-110"
             >
               <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent transition-transform duration-700 group-hover:translate-x-[320%]" />
+              <span className="pointer-events-none absolute inset-0 opacity-0 md:opacity-0 group-active:opacity-100 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.24),transparent_70%)] transition" />
               <span className="relative z-10">Explore Events</span>
             </motion.a>
             <motion.a
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.96 }}
               href="#timeline"
-              className="group relative overflow-hidden w-full sm:w-auto px-7 md:px-9 py-3 md:py-4 rounded-xl border border-cyan-500/45 bg-[#041223]/75 text-cyan-200 text-sm md:text-base font-bold tracking-[0.08em] uppercase hover:border-cyan-300/75 hover:bg-cyan-500/10 transition duration-300 text-center"
+              className="group relative overflow-hidden w-full sm:w-auto px-7 md:px-9 py-3 md:py-4 rounded-xl border border-cyan-500/45 bg-[#041223]/75 text-cyan-200 text-sm md:text-base font-bold tracking-[0.08em] uppercase hover:border-cyan-300/75 hover:bg-cyan-500/10 transition duration-300 text-center active:scale-[0.985] active:border-cyan-200/80"
             >
               <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-cyan-200/30 to-transparent transition-transform duration-700 group-hover:translate-x-[320%]" />
               <span className="relative z-10">View Timeline</span>
@@ -573,6 +659,18 @@ export default function Home() {
             className="text-xs md:text-sm text-gray-300 font-medium"
           >
             March 24-25, 2026
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-5 md:hidden"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/55 bg-cyan-400/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-100 shadow-[0_0_22px_rgba(34,211,238,0.25)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-200" />
+              Tap Dock To Explore Fast
+            </div>
           </motion.div>
         </div>
 
