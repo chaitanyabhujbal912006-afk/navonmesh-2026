@@ -256,8 +256,9 @@ export default function Home() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<(typeof events)[number] | null>(null);
   const [showMoreEventDetails, setShowMoreEventDetails] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [introPhase, setIntroPhase] = useState<"boot" | "sync" | "flash">("boot");
+  const [reduceHeavyEffects, setReduceHeavyEffects] = useState(true);
   const registrationFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScl1YbcLNNJl_we0kAl8u0wXcx-mH3imTXoq9SlcJBlq74a7Q/viewform";
 
   const openEventDetails = (event: (typeof events)[number]) => {
@@ -266,15 +267,41 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const evaluateDevice = () => {
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+      const saveData = Boolean(connection?.saveData);
+      const slowNetwork = /(^|[^a-z])(2g|3g)([^a-z]|$)/i.test(connection?.effectiveType ?? "");
+      const smallViewport = window.matchMedia("(max-width: 768px)").matches;
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setReduceHeavyEffects(saveData || slowNetwork || smallViewport || prefersReducedMotion);
+    };
+
+    evaluateDevice();
+    window.addEventListener("resize", evaluateDevice);
+    return () => window.removeEventListener("resize", evaluateDevice);
+  }, []);
+
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    const saveData = Boolean(connection?.saveData);
+    const slowNetwork = /(^|[^a-z])(2g|3g)([^a-z]|$)/i.test(connection?.effectiveType ?? "");
+    const smallViewport = window.matchMedia("(max-width: 768px)").matches;
+    const introSeen = window.sessionStorage.getItem("navonmesh_intro_seen") === "1";
+    const shouldSkipIntro = prefersReducedMotion || saveData || slowNetwork || smallViewport || introSeen;
+
+    if (shouldSkipIntro) {
       setShowIntro(false);
       return;
     }
 
+    setShowIntro(true);
     const syncTimer = window.setTimeout(() => setIntroPhase("sync"), 520);
     const flashTimer = window.setTimeout(() => setIntroPhase("flash"), 1850);
-    const finishTimer = window.setTimeout(() => setShowIntro(false), 2480);
+    const finishTimer = window.setTimeout(() => {
+      window.sessionStorage.setItem("navonmesh_intro_seen", "1");
+      setShowIntro(false);
+    }, 2480);
 
     return () => {
       window.clearTimeout(syncTimer);
@@ -412,7 +439,7 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.14] bg-[linear-gradient(rgba(125,211,252,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,0.2)_1px,transparent_1px)] bg-[size:88px_88px] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_100%)]" />
         <div className="absolute -inset-12 animate-bgDrift bg-[radial-gradient(circle_at_28%_38%,rgba(45,212,191,0.18),transparent_30%),radial-gradient(circle_at_72%_64%,rgba(56,189,248,0.14),transparent_28%)]" />
       </div>
-      <ParticlesBackground />
+      {!reduceHeavyEffects && <ParticlesBackground />}
       <Navbar />
 
       {/* ==================== HERO SECTION ==================== */}
@@ -421,7 +448,11 @@ export default function Home() {
         className="relative min-h-[100svh] w-full overflow-hidden pt-16 md:pt-0 flex items-center justify-center"
       >
         {/* moving background layer (parallax) */}
-        <ParallaxBackground />
+        {reduceHeavyEffects ? (
+          <div className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center" />
+        ) : (
+          <ParallaxBackground />
+        )}
 
         {/* decorative noise/texture layer */}
         <div className="pointer-events-none absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
@@ -688,6 +719,9 @@ export default function Home() {
                     <img
                       src={event.image}
                       alt={event.name}
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = "/navon.png";
@@ -760,6 +794,8 @@ export default function Home() {
                 <img
                   src={selectedEvent.image}
                   alt={selectedEvent.name}
+                  loading="eager"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = "/navon.png";
