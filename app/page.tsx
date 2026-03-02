@@ -99,17 +99,17 @@ function ParallaxBackground() {
 const events = [
   {
     id: 1,
-    name: "Prompt Engineering  ",
+    name: "Prompt Engineering",
     category: "Artificial Intelligence",
-    description: "Build intelligent solutions using cutting-edge AI algorithms. Compete for ₹50,000 prize pool.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1400&q=80",
-    prize: "₹50,000",
-    fee: "₹200 per team",
-    teamSize: "1-3 members",
+    description: "Master the art of AI communication. Craft precise prompts to solve complex challenges.",
+    image: "/events/prompt.jpeg",
+    prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
+    fee: "₹100 per participant",
+    teamSize: "Individual",
     mode: "Offline",
-    schedule: "March 24, 2026 · 10:00 AM - 1:00 PM",
-    venue: "AI Lab, SET Campus",
-    eligibility: "UG/PG students from any branch",
+    schedule: "24 & 25 March, 2026 ",
+    venue: "DESPU campus ",
+    eligibility: "UG students from any branch",
     deadline: "March 20, 2026",
     requirements: "Laptop, student ID, and internet access",
     details:
@@ -122,16 +122,16 @@ const events = [
   {
     id: 2,
     name: "Poster Competition",
-    category: "Robotics",
-    description: "Design autonomous robots and compete in real-world challenges. Show your engineering prowess.",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1400&q=80",
-    prize: "₹30,000",
-    fee: "₹100 per participant",
-    teamSize: "1-2 members",
+    category: "Design & Research",
+    description: "Visualize complex ideas and research. Compete in creative storytelling and technical presentation.",
+    image: "/events/poster1.png",
+    prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
+    fee: "₹300 per team",
+    teamSize: "4 members",
     mode: "Offline",
-    schedule: "March 24, 2026 · 2:00 PM - 5:00 PM",
-    venue: "Main Exhibition Hall",
-    eligibility: "Open to all registered participants",
+    schedule: "24 & 25 March, 2026 ",
+    venue: "DESPU campus ",
+    eligibility: "Open to All students",
     deadline: "March 21, 2026",
     requirements: "Printed poster, abstract sheet, and college ID",
     details:
@@ -143,19 +143,19 @@ const events = [
   },
   { 
     id: 3,
-    name: " WAR-BOTS (Robo Race)",
-    category: "Competitive Programming",
-    description: "Solve algorithmic challenges under time pressure. Compete against the best minds.",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1400&q=80",
-    prize: "₹60,000",
-    fee: "₹500 per team",
-    teamSize: "1-2 members",
+    name: "WAR-BOTS (Robo Race)",
+    category: "Robotics",
+    description: "Race custom-built robots on intense tracks. Dominate the arena with speed and precision.",
+    image: "/events/warbot.png",
+    prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
+    fee: "₹300 per team",
+    teamSize: "3 members per team",
     mode: "Offline",
-    schedule: "March 25, 2026 · 9:00 AM - 4:00 PM",
-    venue: "Robotics Arena, Ground Floor",
-    eligibility: "UG/PG students with hardware build",
+    schedule: "24 & 25 March, 2026 ",
+    venue: "DESPU campus ",
+    eligibility: "Undergraduate students  ",
     deadline: "March 18, 2026",
-    requirements: "Custom bot, safety checklist, and ID cards",
+    requirements: "Robot must be self-built, within 30×30×30 cm size and 5 kg weight limits, powered onboard only, with wired or wireless control allowed.",
     details:
       "Bring your custom robot and dominate intense head-to-head race tracks. Performance, build quality, and control precision define rankings.",
     highlights: ["Knockout format", "Live arena battles", "Engineering + speed scoring"],
@@ -166,62 +166,40 @@ const events = [
   {
     id: 4,
     name: "Circuit Design",
-    category: "Game Development",
-    description: "Create innovative games in 48 hours. Showcase your creativity and technical skills.",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
-    prize: "₹40,000",
-    fee: "₹150 per participant",
-    teamSize: "1-3 members",
+    category: "Electronics",
+    description: "Build and optimize analog/digital circuits under real constraints. Showcase your hardware engineering skills.",
+    image: "/events/circuit.jpeg",
+    prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
+    fee: "₹200 per team",
+    teamSize: "3 members per team",
     mode: "Offline",
-    schedule: "March 24, 2026 · 11:00 AM - 2:00 PM",
-    venue: "Electronics Lab Complex",
-    eligibility: "Open to E&TC/EE/EX and allied branches",
+    schedule: "March 25, 2026 ",
+    venue: "DESPU campus ",
+    eligibility: "Undergraduate students  (Diploma / Engineering / Technology / Applied Sciences).",
     deadline: "March 20, 2026",
-    requirements: "Basic components kit and calculator",
+    requirements: "All necessary components and required equipment will be provided by the Organisers.",
     details:
       "Build and optimize analog/digital circuits under real constraints. Entries are judged for efficiency, reliability, and implementation quality.",
-    highlights: ["Hardware testing round", "Debug sprint", "Design documentation scoring"],
+    highlights: ["Round 1 — Qualifying", "Round 2 — Final Decider"],
     icon: "circuit" as UiIcon,
     color: "from-orange-500/20 to-red-600/20",
     borderColor: "border-orange-400/50",
   },
-  {
+  { 
     id: 5,
-    name: "Startup:PoC and Idea Competition",
-    category: "Entrepreneurship",
-    description: "Build stunning web experiences. Full-stack development challenge with real-world scenarios.",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
-    prize: "₹75,000",
-    fee: "₹300 per team",
-    teamSize: "2-4 members",
-    mode: "Hybrid",
-    schedule: "March 25, 2026 · 10:30 AM - 3:30 PM",
-    venue: "Innovation Center + Online Pitch",
-    eligibility: "Student founders and startup teams",
-    deadline: "March 19, 2026",
-    requirements: "Pitch deck, PoC demo, and market plan",
-    details:
-      "Pitch your startup concept with business model, prototype, and market strategy. Judges evaluate feasibility, innovation, and execution roadmap.",
-    highlights: ["Investor-style pitch", "Prototype demo", "Mentor feedback loop"],
-    icon: "startup" as UiIcon,
-    color: "from-indigo-500/20 to-purple-600/20",
-    borderColor: "border-indigo-400/50",
-  },
-  {
-    id: 6,
     name: "Valorant Tournament",
-    category:   "Gaming",
-    description: "Present your innovative ideas to industry leaders. Win funding and mentorship opportunities.",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=80",
-    prize: "₹45,000",
-    fee: "₹750 per team",
-    teamSize: "5 players + 1 substitute",
-    mode: "LAN",
-    schedule: "March 24-25, 2026 · 12:00 PM onwards",
-    venue: "Gaming Zone, Main Auditorium",
-    eligibility: "College teams only",
+    category: "Gaming",
+    description: "Compete in a high-stakes 5v5 tactical shooter tournament. Showcase your strategy and aim.",
+    image: "/events/valorant1.jpeg",
+    prize: "1st: ₹5,000 · 2nd: ₹3,000 · 3rd: ₹2,000",
+    fee: "₹400 per team",
+    teamSize: "5 players per team",
+    mode: "Offline",
+    schedule: "24 & 25 March, 2026",
+    venue: "DESPU campus   ",
+    eligibility: "UG students from any branch",
     deadline: "March 17, 2026",
-    requirements: "Team roster, IDs, and game account details",
+    requirements: "Players must bring their own peripherals: Mouse, Mousepad, Keyboard, Headphones (PCs will be provided with the game pre-installed).",
     details:
       "Compete in intense team-based tactical matches with seeded brackets. Performance is ranked by match wins, round difference, and finals result.",
     highlights: ["Seeded elimination bracket", "Live shoutcasting", "MVP recognition"],
@@ -242,23 +220,23 @@ const timeline = [
 const faqData = [
   {
     question: "Who can participate in NAVONMESH?",
-    answer: "All students from any college/university worldwide are welcome. Some events may have specific prerequisites listed on the event page.",
+    answer: "NAVONMESH is open to all undergraduate students from any college or university. Specific eligibility criteria are listed under each event details.",
   },
   {
     question: "Is there any registration fee?",
-    answer: "Registration is completely FREE! However, some workshops may have nominal charges. All main events are free to participate.",
+    answer: "Yes, there are nominal registration fees for events ranging from ₹100 to ₹400. You can pay via the registration link provided.",
   },
   {
     question: "Can I participate in multiple events?",
-    answer: "Absolutely! You can register for multiple events based on your schedule. Just ensure you manage your time effectively.",
+    answer: "Absolutely! You can register for multiple events as long as their schedules do not clash. Please check the timeline before registering.",
   },
   {
     question: "Are teams allowed?",
-    answer: "Yes! Most events allow teams of 2-4 members. Team details are specified for each event. Register as an individual and form teams during registration.",
+    answer: "Yes! Events like Valorant, Robo Race, and Poster Presentation are team-based (3-5 members), while Prompt Engineering is for individuals.",
   },
   {
     question: "When will results be announced?",
-    answer: "Results will be announced within 24-48 hours after each event concludes. Winners will be notified via email.",
+    answer: "Results are typically announced during the valedictory ceremony on March 25, 2026. Winners will also be notified via email/phone.",
   },
 ];
 
@@ -426,7 +404,7 @@ export default function Home() {
         transition={{ delay: 0.9, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="fixed inset-x-3 bottom-3 z-[90] md:hidden"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-cyan-300/35 bg-[#041224]/88 p-2.5 shadow-[0_16px_42px_rgba(0,0,0,0.45),0_0_28px_rgba(34,211,238,0.2)] backdrop-blur-xl">
+        <div className="relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-[#041224]/80 p-2 shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(34,211,238,0.15)] backdrop-blur-2xl">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(34,211,238,0.2),transparent_45%),radial-gradient(circle_at_85%_100%,rgba(59,130,246,0.2),transparent_40%)]" />
           <div className="relative grid grid-cols-4 gap-1.5">
             {[
@@ -439,7 +417,7 @@ export default function Home() {
                 key={item.label}
                 href={item.href}
                 whileTap={{ scale: 0.93 }}
-                className="group flex flex-col items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-1.5 py-2.5 text-center transition active:border-cyan-200/70 active:bg-cyan-400/20"
+                className="group flex flex-col items-center justify-center rounded-xl border border-transparent hover:border-cyan-500/30 hover:bg-cyan-500/10 px-1 py-2 text-center transition active:bg-cyan-400/10"
               >
                 <span className="text-cyan-200 transition group-active:text-white">
                   {renderIcon(item.icon, "h-4 w-4")}
@@ -496,10 +474,9 @@ export default function Home() {
           transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
           className="pointer-events-none absolute left-1/2 top-1/2 h-[68vw] w-[68vw] -translate-x-1/2 -translate-y-[45%] rounded-full border border-cyan-300/30 blur-[0.5px] md:hidden"
         />
-        <div className="pointer-events-none absolute inset-x-5 top-44 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent md:hidden" />
 
-        {/* CONTENT */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20 text-center flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-screen">
+          {/* CONTENT */}
+          <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20 text-center flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-screen">
           <div className="pointer-events-none absolute inset-x-8 top-40 h-28 rounded-full bg-cyan-400/12 blur-3xl md:hidden" />
           <div className="pointer-events-none absolute right-8 top-[42%] h-2.5 w-2.5 rounded-full bg-cyan-200/80 shadow-[0_0_15px_rgba(34,211,238,0.8)] md:hidden" />
           <div className="pointer-events-none absolute left-8 top-[58%] h-2 w-2 rounded-full bg-blue-200/80 shadow-[0_0_14px_rgba(59,130,246,0.75)] md:hidden" />
@@ -518,7 +495,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="mb-8 md:mb-8"
+            className="mb-2 md:mb-8 relative z-10"
           >
             <Image
               src="/logo.png"
@@ -534,7 +511,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-base md:text-lg text-cyan-100 tracking-[2px] md:tracking-[3px] uppercase mb-4 md:mb-6 font-semibold drop-shadow-[0_0_10px_rgba(103,232,249,0.45)] px-2"
+            className="text-base md:text-lg text-cyan-100 tracking-[2px] md:tracking-[3px] uppercase mb-2 md:mb-6 font-semibold drop-shadow-[0_0_10px_rgba(103,232,249,0.45)] px-2"
           >
             School of Engineering & Technology 
            
@@ -545,7 +522,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="font-display text-4xl md:text-6xl lg:text-8xl font-black leading-tight mb-2 md:mb-4 bg-gradient-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]"
+            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] md:leading-tight mb-3 md:mb-4 bg-gradient-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]"
           >
             {"NAVONMESH".split("").map((letter, idx) => (
               <motion.span
@@ -579,7 +556,7 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.4 }}
             className="text-base md:text-lg text-gray-300 font-light tracking-wider mb-8 md:mb-12"
           >
-            Where Innovation Meets Excellence
+            Where Idea Complete
           </motion.p>
 
           <motion.div
@@ -589,8 +566,8 @@ export default function Home() {
             className="mb-7 md:mb-10 grid grid-cols-3 gap-2 md:gap-3 w-full max-w-sm md:max-w-xl"
           >
             {[
-              { label: "Prize Pool", value: "₹1.75L+" },
-              { label: "Events", value: "6+" },
+              { label: "Prize Pool", value: "₹82K+" },
+              { label: "Events", value: "5+" },
               { label: "Participants", value: "6000+" },
             ].map((stat) => (
               <div
@@ -685,8 +662,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
-              NAVONMESH is India&apos;s premier university technology festival, uniting 6,000+ innovators and creators.
-              Compete across 6+ events, win ₹3+ lakhs in prizes, and make your mark on the tech world.
+              NAVONMESH is a university technology festival that brings together students to explore innovation, creativity, and practical problem-solving through technical events and competitions. Organized by the School of Engineering & Technology, it provides a platform for learning, collaboration, and showcasing student talent across multiple domains. The fest aims to encourage hands-on experience, teamwork, and a strong technical community.
             </p>
           </motion.div>
 
@@ -694,8 +670,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {[
               { icon: "target" as UiIcon, title: "Innovation Hub", desc: "Showcase groundbreaking ideas" },
-              { icon: "users" as UiIcon, title: "Global Community", desc: "Network with 6000+ innovators" },
-              { icon: "award" as UiIcon, title: "Premium Prizes", desc: "Win ₹3+ lakhs total prize pool" },
+              { icon: "users" as UiIcon, title: "Global Community", desc: "Network with 2000+ innovators" },
+              { icon: "award" as UiIcon, title: "Premium Prizes", desc: "Win ₹82,000+ total prize pool" },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -739,7 +715,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-              6 exciting competitions across AI, Robotics, Web Dev, Gaming, and more
+              5 exciting competitions across AI, Robotics, Electronics, Gaming, and more
             </p>
           </motion.div>
 
@@ -749,17 +725,23 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6"
           >
             {events.map((event) => (
               <motion.div
                 key={event.id}
                 variants={itemVariants}
-                className="group cursor-pointer h-full"
+                className={`group cursor-pointer h-full lg:col-span-2 ${
+                  event.name === "Circuit Design"
+                    ? "lg:col-start-2"
+                    : event.name === "Valorant Tournament"
+                      ? "lg:col-start-4"
+                      : ""
+                }`}
                 onClick={() => openEventDetails(event)}
               >
                 <div
-                  className={`cyber-card h-full rounded-2xl overflow-hidden border ${event.borderColor} backdrop-blur-lg transition duration-300 group-hover:border-opacity-100 group-hover:shadow-2xl group-hover:shadow-cyan-500/20 bg-gradient-to-br ${event.color} flex flex-col`}
+                  className={`cyber-card h-full rounded-2xl overflow-hidden border ${event.borderColor} backdrop-blur-lg transition duration-300 group-hover:border-opacity-100 group-hover:shadow-2xl group-hover:shadow-cyan-500/20 bg-gradient-to-br ${event.color} flex flex-col active:scale-[0.98] md:active:scale-100`}
                 >
                   {/* IMAGE */}
                   <div className="relative h-28 sm:h-32 md:h-40 overflow-hidden">
@@ -829,45 +811,47 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-x-0 top-16 bottom-0 z-[999] bg-black/75 backdrop-blur-sm p-3 md:p-6 lg:p-8 flex items-start justify-center overflow-y-auto"
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[999] bg-black/90 backdrop-blur-md p-0 md:p-6 lg:p-8 flex items-center justify-center overflow-y-auto"
           onClick={() => setSelectedEvent(null)}
         >
           <motion.div
-            initial={{ scale: 0.92, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.25 }}
-            className="relative z-[1000] my-0 w-full max-w-3xl max-h-[calc(100svh-6rem)] rounded-2xl border border-cyan-400/40 bg-[#020812] shadow-[0_0_50px_rgba(34,211,238,0.2)] overflow-hidden flex flex-col"
+            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, type: "spring", damping: 25, stiffness: 300 }}
+            className="relative z-[1000] w-full h-full md:h-auto md:max-w-3xl md:max-h-[90vh] rounded-none md:rounded-2xl border-x-0 md:border border-cyan-400/30 bg-[#020812] shadow-[0_0_50px_rgba(34,211,238,0.15)] overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-28 sm:h-32 md:h-40 flex-shrink-0">
+            <div className="relative h-64 md:h-56 flex-shrink-0">
               <img
                 src={selectedEvent.image}
                 alt={selectedEvent.name}
-                loading="eager"
-                decoding="async"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/navon.png";
-                }}
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#020812]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#020812]/20 to-transparent" />
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="absolute top-4 right-4 h-9 w-9 rounded-full border border-cyan-200/80 bg-[#020812]/90 text-cyan-100 shadow-[0_0_16px_rgba(34,211,238,0.35)] hover:bg-cyan-500/25 transition"
+                className="absolute top-4 right-4 h-10 w-10 rounded-full border border-cyan-200/30 bg-black/50 text-cyan-100 backdrop-blur-md flex items-center justify-center hover:bg-cyan-500/20 transition active:scale-90 z-50"
                 aria-label="Close event details"
               >
-                {renderIcon("close", "h-4 w-4 mx-auto")}
+                {renderIcon("close", "h-5 w-5")}
               </button>
-              <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-xs md:text-sm text-cyan-300/90 uppercase tracking-[0.2em]">{selectedEvent.category}</p>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-display font-bold text-white">{selectedEvent.name}</h3>
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#020812] to-transparent">
+                <motion.div
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.1 }}
+                >
+                    <p className="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-1">{selectedEvent.category}</p>
+                    <h3 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight">{selectedEvent.name}</h3>
+                </motion.div>
               </div>
             </div>
 
-            <div className="overflow-y-auto p-3.5 md:p-4 space-y-3">
-              <p className="text-sm md:text-base text-gray-300 leading-relaxed">{selectedEvent.details}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              <p className="text-base md:text-lg text-gray-300 leading-relaxed font-light">{selectedEvent.details}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
                   <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Prize Pool</p>
                   <p className="text-base font-semibold text-white">{selectedEvent.prize}</p>
@@ -995,10 +979,10 @@ export default function Home() {
               Total Prize Pool
             </h2>
             <p className="mt-3 text-5xl md:text-6xl font-black text-white tracking-tight">
-              ₹1,75,000+
+              ₹82,000
             </p>
             <p className="mt-3 text-base md:text-lg text-slate-400">
-              Real rewards for real ideas. Industry recognition awaits the champions.
+              Real rewards for real ideas. 1st, 2nd, and 3rd prizes apply to all events except Valorant.
             </p>
           </motion.div>
 
@@ -1008,7 +992,7 @@ export default function Home() {
                 icon: "gold" as UiIcon,
                 label: "Grand Prize",
                 title: "1st Prize",
-                amount: "₹1,00,000",
+                amount: "₹10,000",
                 iconBg: "bg-amber-400",
                 iconShadow: "shadow-[0_0_30px_rgba(251,191,36,0.4)]",
                 border: "border-cyan-500/60",
@@ -1017,7 +1001,7 @@ export default function Home() {
                 icon: "silver" as UiIcon,
                 label: "Runner Up",
                 title: "2nd Prize",
-                amount: "₹50,000",
+                amount: "₹5,000",
                 iconBg: "bg-slate-300",
                 iconShadow: "shadow-[0_0_28px_rgba(226,232,240,0.35)]",
                 border: "border-cyan-700/40",
@@ -1026,7 +1010,7 @@ export default function Home() {
                 icon: "bronze" as UiIcon,
                 label: "Second Runner Up",
                 title: "3rd Prize",
-                amount: "₹25,000",
+                amount: "₹3,000",
                 iconBg: "bg-amber-700",
                 iconShadow: "shadow-[0_0_28px_rgba(217,119,6,0.35)]",
                 border: "border-cyan-700/40",
@@ -1074,41 +1058,83 @@ export default function Home() {
           </motion.h2>
 
           <div className="space-y-3 md:space-y-4">
-            {faqData.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.05 }}
-                viewport={{ once: true }}
-                className="cyber-card rounded-2xl border border-cyan-500/30 overflow-hidden hover:border-cyan-300/70 backdrop-blur-sm transition"
-              >
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
-                  className="w-full p-4 md:p-6 text-left flex justify-between items-center hover:from-cyan-500/10 hover:to-blue-600/10 transition"
+            {faqData.map((item, idx) => {
+              const isOpen = expandedFaq === idx;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className={`group relative overflow-hidden rounded-2xl border transition-all duration-500 ${
+                    isOpen
+                      ? "border-cyan-400 bg-cyan-900/10 shadow-[0_0_35px_rgba(34,211,238,0.15)]"
+                      : "border-cyan-500/20 bg-[#030c17]/40 hover:border-cyan-400/50 hover:bg-cyan-900/5"
+                  }`}
                 >
-                  <span className="text-base md:text-lg font-bold text-white pr-4">{item.question}</span>
-                  <span
-                    className={`text-cyan-400 flex-shrink-0 text-2xl transition transform duration-300 ${
-                      expandedFaq === idx ? "rotate-180" : ""
+                  {/* Active Indicator Line */}
+                  <div
+                    className={`absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-cyan-400 via-blue-500 to-cyan-400 transition-all duration-500 ${
+                      isOpen ? "opacity-100" : "opacity-0"
                     }`}
-                  >
-                    +
-                  </span>
-                </button>
+                  />
 
-                {expandedFaq === idx && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="px-4 md:px-6 pb-4 md:pb-6 border-t border-cyan-500/30 text-sm md:text-base text-gray-400"
+                  <button
+                    onClick={() => setExpandedFaq(isOpen ? null : idx)}
+                    className="relative flex w-full items-center justify-between p-5 md:p-7 text-left z-10"
                   >
-                    {item.answer}
-                  </motion.div>
-                )}
-              </motion.div>
-            ))}
+                    <span
+                      className={`text-lg md:text-xl font-bold tracking-wide transition-colors duration-300 ${
+                        isOpen ? "text-cyan-100 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" : "text-slate-300 group-hover:text-white"
+                      }`}
+                    >
+                      {item.question}
+                    </span>
+
+                    {/* Animated Icon */}
+                    <div
+                      className={`relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
+                        isOpen
+                          ? "border-cyan-400 bg-cyan-400/20 rotate-180 shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                          : "border-cyan-500/30 bg-transparent group-hover:border-cyan-400/60 group-hover:bg-cyan-500/10"
+                      }`}
+                    >
+                      <svg
+                        className={`w-5 h-5 transition-colors duration-300 ${isOpen ? "text-cyan-200" : "text-cyan-500"}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="px-5 pb-6 md:px-8 md:pb-8 pt-0 relative z-10">
+                          <div className="h-px w-full bg-gradient-to-r from-cyan-500/0 via-cyan-500/30 to-cyan-500/0 mb-5" />
+                          <p className="text-base md:text-lg text-cyan-100/80 leading-relaxed font-light">
+                            {item.answer}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  
+                  {/* Background Glow for Active State */}
+                  <div className={`absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-transparent pointer-events-none transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0"}`} />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1226,14 +1252,19 @@ export default function Home() {
             <div>
               <h4 className="text-3xl font-bold text-white">Follow</h4>
               <div className="mt-4 flex gap-3">
-                {(["facebook", "x", "instagram", "linkedin"] as UiIcon[]).map((social) => (
+                {[
+                  { icon: "facebook", href: "https://www.facebook.com/DESPuneUniversity/" },
+                  { icon: "x", href: "https://x.com/des_pune?lang=en" },
+                  { icon: "instagram", href: "https://www.instagram.com/soet.despu/" },
+                  { icon: "linkedin", href: "https://in.linkedin.com/school/des-pune-university/" },
+                ].map((social) => (
                   <a
-                    key={social}
-                    href="#"
+                    key={social.icon}
+                    href={social.href}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-500/55 bg-cyan-500/10 text-cyan-300 transition hover:bg-cyan-400/20 hover:text-cyan-100 hover:shadow-[0_0_22px_rgba(34,211,238,0.25)]"
-                    aria-label={social}
+                    aria-label={social.icon}
                   >
-                    {renderIcon(social, "h-5 w-5")}
+                    {renderIcon(social.icon as UiIcon, "h-5 w-5")}
                   </a>
                 ))}
               </div>
