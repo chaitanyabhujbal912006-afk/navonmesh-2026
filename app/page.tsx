@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useSpring, useViewportScroll, useTransform } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion, useMotionTemplate, useMotionValue, useSpring, useViewportScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import ParticlesBackground from "./ParticlesBackground";
@@ -85,12 +85,12 @@ function renderIcon(icon: UiIcon, className: string) {
 function ParallaxBackground() {
   const { scrollY } = useViewportScroll();
   // adjust movement range as needed
-  const y = useTransform(scrollY, [0, 800], [0, -200]);
+  const y = useTransform(scrollY, [0, 1000], [0, -140]);
 
   return (
     <motion.div
       style={{ y }}
-      className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center bg-fixed"
+      className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center will-change-transform"
     />
   );
 }
@@ -245,6 +245,7 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<(typeof events)[number] | null>(null);
   const [showMoreEventDetails, setShowMoreEventDetails] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
+  const [titleMorphReady, setTitleMorphReady] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [reduceHeavyEffects, setReduceHeavyEffects] = useState(true);
   const [particleQuality, setParticleQuality] = useState<"low" | "high">("high");
@@ -279,6 +280,12 @@ export default function Home() {
     window.addEventListener("resize", evaluateDevice);
     return () => window.removeEventListener("resize", evaluateDevice);
   }, []);
+
+  useEffect(() => {
+    if (!showIntro) {
+      setTitleMorphReady(true);
+    }
+  }, [showIntro]);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -329,23 +336,35 @@ export default function Home() {
       return;
     }
 
+    let frameId: number | null = null;
+    let pendingX = -320;
+    let pendingY = -320;
+    const flushPointer = () => {
+      pointerX.set(pendingX);
+      pointerY.set(pendingY);
+      frameId = null;
+    };
+    const queuePointerUpdate = (x: number, y: number) => {
+      pendingX = x;
+      pendingY = y;
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(flushPointer);
+      }
+    };
+
     const handleMove = (event: MouseEvent) => {
-      pointerX.set(event.clientX);
-      pointerY.set(event.clientY);
+      queuePointerUpdate(event.clientX, event.clientY);
     };
     const handleTouchMove = (event: TouchEvent) => {
       const touch = event.touches[0];
       if (!touch) return;
-      pointerX.set(touch.clientX);
-      pointerY.set(touch.clientY);
+      queuePointerUpdate(touch.clientX, touch.clientY);
     };
     const handleLeave = () => {
-      pointerX.set(-320);
-      pointerY.set(-320);
+      queuePointerUpdate(-320, -320);
     };
     const handleTouchEnd = () => {
-      pointerX.set(window.innerWidth * 0.5);
-      pointerY.set(window.innerHeight * 0.78);
+      queuePointerUpdate(window.innerWidth * 0.5, window.innerHeight * 0.78);
     };
 
     window.addEventListener("mousemove", handleMove, { passive: true });
@@ -353,6 +372,9 @@ export default function Home() {
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
     return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("mouseleave", handleLeave);
       window.removeEventListener("touchmove", handleTouchMove);
@@ -375,14 +397,17 @@ export default function Home() {
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-[#020914] pb-24 text-white md:pb-0">
-      <AnimatePresence>
-        {showIntro && (
-          <AIBootSequence 
-            onComplete={() => setShowIntro(false)}
-            eventTitle="NAVONMESH 2026"
-          />
-        )}
-      </AnimatePresence>
+      <LayoutGroup id="navonmesh-title-morph">
+        <AnimatePresence>
+          {showIntro && (
+            <AIBootSequence
+              onMorphStart={() => setTitleMorphReady(true)}
+              onComplete={() => setShowIntro(false)}
+              eventTitle="NAVONMESH"
+              titleLayoutId="navonmesh-word"
+            />
+          )}
+        </AnimatePresence>
 
       <div className="pointer-events-none fixed inset-0 -z-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(34,211,238,0.18),transparent_34%),radial-gradient(circle_at_82%_22%,rgba(96,165,250,0.15),transparent_36%),linear-gradient(180deg,#02060f_0%,#030b16_45%,#020711_100%)]" />
@@ -518,24 +543,24 @@ export default function Home() {
           </motion.p>
 
           {/* MAIN TITLE */}
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] md:leading-tight mb-3 md:mb-4 bg-gradient-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]"
-          >
-            {"NAVONMESH".split("").map((letter, idx) => (
-              <motion.span
-                key={`${letter}-${idx}`}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: 0.24 + idx * 0.04 }}
-                className="inline-block"
-              >
-                {letter}
-              </motion.span>
-            ))}
-          </motion.h1>
+          {titleMorphReady ? (
+            <motion.h1
+              layoutId="navonmesh-word"
+              initial={false}
+              animate={{ opacity: 1 }}
+              transition={{ layout: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.45 } }}
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] md:leading-tight mb-3 md:mb-4 bg-gradient-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]"
+            >
+              NAVONMESH
+            </motion.h1>
+          ) : (
+            <h1
+              aria-hidden="true"
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] md:leading-tight mb-3 md:mb-4 opacity-0"
+            >
+              NAVONMESH
+            </h1>
+          )}
 
           {/* YEAR */}
           <motion.div
@@ -1276,6 +1301,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      </LayoutGroup>
     </main>
   );
 }

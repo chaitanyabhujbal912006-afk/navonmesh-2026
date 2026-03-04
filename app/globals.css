@@ -27,6 +27,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
   font-family: var(--font-rajdhani), "Segoe UI", "Inter", system-ui, sans-serif;
   letter-spacing: 0.01em;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 section {
@@ -512,6 +514,10 @@ a:focus-visible {
 
 /* ========== PREFERS REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {

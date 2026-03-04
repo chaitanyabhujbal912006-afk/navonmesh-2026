@@ -5,7 +5,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface AIBootSequenceProps {
   onComplete: () => void;
+  onMorphStart?: () => void;
   eventTitle?: string;
+  titleLayoutId?: string;
 }
 
 type IntroPhase = "boot" | "glitch" | "hud" | "logo" | "impact" | "dissolve";
@@ -23,20 +25,30 @@ type EnergyParticle = {
 
 export default function AIBootSequence({
   onComplete,
+  onMorphStart,
   eventTitle = "NAVONMESH 2026",
+  titleLayoutId = "navonmesh-word",
 }: AIBootSequenceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const phaseRef = useRef<IntroPhase>("boot");
   const introCompletedRef = useRef(false);
+  const morphStartedRef = useRef(false);
   const [phase, setPhase] = useState<IntroPhase>("boot");
   const [showIntro, setShowIntro] = useState(true);
+
+  const triggerMorphStart = useCallback(() => {
+    if (morphStartedRef.current) return;
+    morphStartedRef.current = true;
+    onMorphStart?.();
+  }, [onMorphStart]);
 
   const completeIntro = useCallback(() => {
     if (introCompletedRef.current) return;
     introCompletedRef.current = true;
+    triggerMorphStart();
     setShowIntro(false);
     onComplete();
-  }, [onComplete]);
+  }, [onComplete, triggerMorphStart]);
 
   useEffect(() => {
     phaseRef.current = phase;
@@ -157,13 +169,18 @@ export default function AIBootSequence({
     timers.push(window.setTimeout(() => setPhase("logo"), 2180));
     timers.push(window.setTimeout(() => setPhase("impact"), 3340));
     timers.push(window.setTimeout(() => setPhase("dissolve"), 4020));
-    timers.push(window.setTimeout(() => setShowIntro(false), 4580));
+    timers.push(
+      window.setTimeout(() => {
+        triggerMorphStart();
+        setShowIntro(false);
+      }, 4580),
+    );
     timers.push(window.setTimeout(completeIntro, 5320));
 
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer));
     };
-  }, [completeIntro]);
+  }, [completeIntro, triggerMorphStart]);
 
   return (
     <AnimatePresence>
@@ -322,6 +339,7 @@ export default function AIBootSequence({
 
             <div className="relative">
               <motion.h1
+                layoutId={titleLayoutId}
                 initial={{ opacity: 0, scale: 0.86 }}
                 animate={{
                   opacity: phase === "logo" || phase === "impact" || phase === "dissolve" ? 1 : 0.16,
@@ -333,7 +351,11 @@ export default function AIBootSequence({
                         : 0.86,
                   letterSpacing: phase === "logo" || phase === "impact" || phase === "dissolve" ? ["0.24em", "0.08em"] : "0.24em",
                 }}
-                transition={{ duration: phase === "impact" ? 0.5 : 0.85, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: phase === "impact" ? 0.5 : 0.85,
+                  ease: [0.16, 1, 0.3, 1],
+                  layout: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+                }}
                 className="font-display text-4xl font-black uppercase text-cyan-100 drop-shadow-[0_0_42px_rgba(34,211,238,0.8)] sm:text-6xl md:text-7xl"
               >
                 {eventTitle}
