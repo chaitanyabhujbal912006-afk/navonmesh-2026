@@ -81,9 +81,15 @@ export default function Navbar() {
             >
              Register Now
             </a>
-            <button className="h-10 px-4 lg:px-7 rounded-xl border border-cyan-200/35 text-slate-900 text-[0.68rem] lg:text-xs font-extrabold leading-none tracking-[0.11em] uppercase bg-gradient-to-r from-cyan-300 to-teal-300 hover:brightness-105 hover:shadow-[0_0_30px_rgba(45,212,191,0.45)] transition duration-300 inline-flex items-center justify-center">
+            <a
+              href="/navonmesh-brochure.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="NAVONMESH-2026-Brochure-Rulebook.pdf"
+              className="h-10 px-4 lg:px-7 rounded-xl border border-cyan-200/35 text-slate-900 text-[0.68rem] lg:text-xs font-extrabold leading-none tracking-[0.11em] uppercase bg-gradient-to-r from-cyan-300 to-teal-300 hover:brightness-105 hover:shadow-[0_0_30px_rgba(45,212,191,0.45)] transition duration-300 inline-flex items-center justify-center"
+            >
               Brochure & Rulebook
-            </button>
+            </a>
           </div>
 
           {/* MOBILE MENU BUTTON */}
@@ -167,9 +173,16 @@ export default function Navbar() {
                   >
                     Register Now
                   </a>
-                  <button className="inline-flex w-full items-center justify-center rounded-xl border border-cyan-100/20 bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 px-6 py-3.5 text-sm font-black uppercase tracking-[0.1em] text-[#021126] shadow-[0_0_28px_rgba(45,212,191,0.3)] transition hover:brightness-110">
+                  <a
+                    href="/navonmesh-brochure.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download="NAVONMESH-2026-Brochure-Rulebook.pdf"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="inline-flex w-full items-center justify-center rounded-xl border border-cyan-100/20 bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 px-6 py-3.5 text-sm font-black uppercase tracking-[0.1em] text-[#021126] shadow-[0_0_28px_rgba(45,212,191,0.3)] transition hover:brightness-110"
+                  >
                     Brochure & Rulebook
-                  </button>
+                  </a>
                 </div>
               </div>
             </motion.div>
