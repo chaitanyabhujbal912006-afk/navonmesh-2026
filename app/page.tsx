@@ -1238,7 +1238,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== SPONSORS SECTION ==================== */}
+      {/*
+      ==================== SPONSORS SECTION ====================
       <section className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-transparent via-slate-950/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -1268,6 +1269,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* ==================== FOOTER ==================== */}
       <footer
