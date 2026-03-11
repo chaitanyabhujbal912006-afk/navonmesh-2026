@@ -185,8 +185,52 @@ const events = [
     color: "from-orange-500/20 to-red-600/20",
     borderColor: "border-orange-400/50",
   },
-  { 
+  {
     id: 5,
+    name: "Startup Idea Competition",
+    category: "Entrepreneurship",
+    description: "Submit a startup idea with concept clarity, technology depth, and financial viability for jury evaluation.",
+    image: "/events/star.png",
+    prize: "Top 3 ideas: ₹3,000 seed funding each",
+    fee: "Free to all participants",
+    teamSize: "Group Participation - MAX 5 Team Members)",
+    mode: "Offline",
+    schedule: "March 25, 2026",
+    venue: "DESPU campus",
+    eligibility: "Open to all student innovators and startup teams",
+    deadline: "March 19, 2026",
+    requirements: "Google form submission with startup concept, scientific and technological depth, applicability, and financial viability details",
+    details:
+      "Teams first submit their startup idea through a Google form. A jury panel will review entries and shortlisted teams will present physically before the panel, with or without a PPT. No model or proof of concept is required for this competition.",
+    highlights: ["Google form screening round", "Physical jury presentation", "Free DISA pre-incubation for selected ideas"],
+    icon: "startup" as UiIcon,
+    color: "from-indigo-500/20 to-purple-600/20",
+    borderColor: "border-indigo-400/50",
+  },
+  {
+    id: 6,
+    name: "Proof of Concept Competition",
+    category: "Entrepreneurship",
+    description: "Showcase a startup proof of concept with high potential and compete on Demo Day before the jury panel.",
+    image: "/events/poc.png",
+    prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
+    fee: "Free to all participants",
+    teamSize: "Group Participation - MAX 5 Team Members)",
+    mode: "Offline",
+    schedule: "March 25, 2026",
+    venue: "DESPU campus",
+    eligibility: "Open to startup teams with a working PoC or model",
+    deadline: "March 19, 2026",
+    requirements: "Shortlisted teams must bring their PoC for physical exhibition on Demo Day",
+    details:
+      "Interested groups will submit PoC details through Google form. Shortlisted teams will be invited to exhibit their model on Demo Day, where the jury will evaluate all displayed proofs of concept. Displayed PoCs will also be offered physical incubation support at DISA.",
+    highlights: ["Separate PoC application form", "Demo Day exhibition", "DISA physical incubation offer"],
+    icon: "startup" as UiIcon,
+    color: "from-fuchsia-500/20 to-violet-600/20",
+    borderColor: "border-fuchsia-400/50",
+  },
+  {
+    id: 7,
     name: "Valorant Tournament",
     category: "Gaming",
     description: "Compete in a high-stakes 5v5 tactical shooter tournament. Showcase your strategy and aim.",
@@ -740,7 +784,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-              5 exciting competitions across AI, Robotics, Electronics, Gaming, and more
+              7 exciting competitions across AI, Robotics, Electronics, Entrepreneurship, Gaming, and more
             </p>
           </motion.div>
 
@@ -756,13 +800,7 @@ export default function Home() {
               <motion.div
                 key={event.id}
                 variants={itemVariants}
-                className={`group cursor-pointer h-full lg:col-span-2 ${
-                  event.name === "Circuit Design"
-                    ? "lg:col-start-2"
-                    : event.name === "Valorant Tournament"
-                      ? "lg:col-start-4"
-                      : ""
-                }`}
+                className="group cursor-pointer h-full lg:col-span-2"
                 onClick={() => openEventDetails(event)}
               >
                 <div
@@ -1004,10 +1042,10 @@ export default function Home() {
               Total Prize Pool
             </h2>
             <p className="mt-3 text-5xl md:text-6xl font-black text-white tracking-tight">
-              ₹82,000
+              ₹1,09,000
             </p>
             <p className="mt-3 text-base md:text-lg text-slate-400">
-              Real rewards for real ideas. 1st, 2nd, and 3rd prizes apply to all events except Valorant.
+              Most events award 1st, 2nd, and 3rd prizes. Startup Idea Competition gives three seed grants of ₹3,000, and Valorant has a separate prize split.
             </p>
           </motion.div>
 
