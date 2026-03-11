@@ -625,7 +625,7 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.4 }}
             className="text-base md:text-lg text-gray-300 font-light tracking-wider mb-8 md:mb-12"
           >
-            Where Idea Complete
+            Where Idea Compete
           </motion.p>
 
           <motion.div
@@ -635,9 +635,9 @@ export default function Home() {
             className="mb-7 md:mb-10 grid grid-cols-3 gap-2 md:gap-3 w-full max-w-sm md:max-w-xl"
           >
             {[
-              { label: "Prize Pool", value: "₹82K+" },
-              { label: "Events", value: "5+" },
-              { label: "Participants", value: "6000+" },
+              { label: "Prize Pool", value: "₹1 Lakh+" },
+              { label: "Events", value: "7+" },
+              { label: "Expected Participants", value: "500+" },
             ].map((stat) => (
               <div
                 key={stat.label}
@@ -740,7 +740,7 @@ export default function Home() {
             {[
               { icon: "target" as UiIcon, title: "Innovation Hub", desc: "Showcase groundbreaking ideas" },
               { icon: "users" as UiIcon, title: "Global Community", desc: "Network with 2000+ innovators" },
-              { icon: "award" as UiIcon, title: "Premium Prizes", desc: "Win ₹82,000+ total prize pool" },
+              { icon: "award" as UiIcon, title: "Premium Prizes", desc: "Win ₹1 Lakh+ total prize pool" },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -1042,7 +1042,7 @@ export default function Home() {
               Total Prize Pool
             </h2>
             <p className="mt-3 text-5xl md:text-6xl font-black text-white tracking-tight">
-              ₹1,09,000
+              ₹1 Lakh+
             </p>
             <p className="mt-3 text-base md:text-lg text-slate-400">
               Most events award 1st, 2nd, and 3rd prizes. Startup Idea Competition gives three seed grants of ₹3,000, and Valorant has a separate prize split.
@@ -1217,7 +1217,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-base md:text-lg text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto">
-              Join 6000+ innovators. Secure your spot now and be part of India&apos;s premier tech fest.
+              Join 500+ innovators. Secure your spot now and be part of India&apos;s premier tech fest.
             </p>
 
             <motion.a
@@ -1232,7 +1232,7 @@ export default function Home() {
             </motion.a>
 
             <p className="text-xs md:text-sm text-gray-500 mt-6 md:mt-8">
-              Questions? Contact us at <span className="text-cyan-400">navonmesh@university.edu</span>
+              Questions? Contact us at <span className="text-cyan-400">1012412134@despu.edu.in</span>
             </p>
           </motion.div>
         </div>
@@ -1302,7 +1302,7 @@ export default function Home() {
             <div>
               <h4 className="text-3xl font-bold text-white">Contact</h4>
               <p className="mt-4 text-base leading-relaxed text-slate-400">
-                Email: <span className="text-cyan-300">navonmesh@university.edu</span>
+                Email: <span className="text-cyan-300">1012412134@despu.edu.in</span>
               </p>
               <p className="mt-2 text-base text-slate-400">
                 Phone: <span className="text-cyan-300">020 47200000</span>

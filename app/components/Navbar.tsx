@@ -28,11 +28,10 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { label: "Domains", href: "#events" },
-    { label: "Prizes", href: "#prizes" },
-    { label: "Team", href: "#about" },
-    { label: "Timeline", href: "#timeline" },
     { label: "Why Participate", href: "#about" },
+    { label: "Domains", href: "#events" },
+    { label: "Timeline", href: "#timeline" },
+    { label: "Prizes", href: "#prizes" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#footer" },
   ];
