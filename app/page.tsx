@@ -281,7 +281,7 @@ const faqData = [
   },
   {
     question: "Are teams allowed?",
-    answer: "Yes. Poster Competition is for 4 members, WAR-BOTS and Circuit Design allow 3-member teams, Startup Idea and PoC competitions allow 2-4 members, Valorant is for 5-player teams, and Prompt Engineering is individual.",
+    answer: "Yes. Poster Competition is for 4 members, WAR-BOTS and Circuit Design allow 3-member teams, Startup Idea and PoC competitions allow up to 5 members, Valorant is for 5-player teams, and Promptopia is individual.",
   },
   {
     question: "When will results be announced?",
