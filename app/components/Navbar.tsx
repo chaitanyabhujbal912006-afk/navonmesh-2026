@@ -54,7 +54,9 @@ export default function Navbar() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2 md:gap-3 min-w-0"
           >
-            <Image src="/navon.png" alt="Navon Logo" width={168} height={66} className="h-9 sm:h-10 md:h-11 w-auto object-contain" />
+            <a href="#" aria-label="Go to home">
+              <Image src="/navon.png" alt="Navon Logo" width={168} height={66} className="h-9 sm:h-10 md:h-11 w-auto object-contain" />
+            </a>
           </motion.div>
 
           {/* DESKTOP NAV LINKS */}

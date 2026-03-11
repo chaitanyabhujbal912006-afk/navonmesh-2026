@@ -276,7 +276,7 @@ const faqData = [
   },
   {
     question: "Are teams allowed?",
-    answer: "Yes! Events like Valorant, Robo Race, and Poster Presentation are team-based (3-5 members), while Prompt Engineering is for individuals.",
+    answer: "Yes. Poster Competition is for 4 members, WAR-BOTS and Circuit Design allow 3-member teams, Startup Idea and PoC competitions allow 2-4 members, Valorant is for 5-player teams, and Prompt Engineering is individual.",
   },
   {
     question: "When will results be announced?",
@@ -636,7 +636,7 @@ export default function Home() {
           >
             {[
               { label: "Prize Pool", value: "₹1 Lakh+" },
-              { label: "Events", value: "7+" },
+              { label: "Events", value: "6+" },
               { label: "Expected Participants", value: "500+" },
             ].map((stat) => (
               <div
@@ -1283,9 +1283,15 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="relative grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-10">
             <div>
-              <h3 className="font-display text-3xl font-black uppercase tracking-[0.04em] text-cyan-300">
-                NAVONMESH
-              </h3>
+              <a href="#" aria-label="Go to home">
+                <Image
+                  src="/navon.png"
+                  alt="NAVONMESH"
+                  width={220}
+                  height={86}
+                  className="h-14 w-auto object-contain"
+                />
+              </a>
               <p className="mt-4 max-w-xs text-base leading-relaxed text-slate-400">
                 India&apos;s premier university technology festival celebrating innovation and excellence.
               </p>
