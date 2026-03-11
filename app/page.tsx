@@ -99,12 +99,12 @@ function ParallaxBackground() {
 const events = [
   {
     id: 1,
-    name: "Prompt Engineering",
+    name: "Promptopia (AI Battle Royale)",
     category: "Artificial Intelligence",
-    description: "Master the art of AI communication. Craft precise prompts to solve complex challenges.",
+    description: "Individual prompt engineering competition focused on solving challenges through smart AI prompting.",
     image: "/events/prompt.jpeg",
     prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
-    fee: "₹100 per participant",
+    fee: "₹100",
     teamSize: "Individual",
     mode: "Offline",
     schedule: "24 & 25 March, 2026 ",
@@ -115,6 +115,7 @@ const events = [
     details:
       "Design high-impact prompts, evaluate outputs, and build a working AI workflow. Judging focuses on creativity, reliability, and practical implementation.",
     highlights: ["Live challenge rounds", "Real-world problem statements", "Expert jury feedback"],
+    coordinators: "Varsha - 70511 18842 | Viraj - 91750 36206",
     icon: "ai" as UiIcon,
     color: "from-cyan-500/20 to-blue-600/20",
     borderColor: "border-cyan-400/50",
@@ -123,33 +124,34 @@ const events = [
     id: 2,
     name: "Poster Competition",
     category: "Design & Research",
-    description: "Visualize complex ideas and research. Compete in creative storytelling and technical presentation.",
+    description: "Theme: The Future of Innovation. Create a research-driven poster and present it with your team.",
     image: "/events/poster1.png",
     prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
-    fee: "₹300 per team",
-    teamSize: "4 members",
+    fee: "₹300",
+    teamSize: "Group (Max 4)",
     mode: "Offline",
     schedule: "24 & 25 March, 2026 ",
     venue: "DESPU campus ",
     eligibility: "Open to All students",
     deadline: "March 21, 2026",
-    requirements: "Printed poster, abstract sheet, and college ID",
+    requirements: "Poster size 2×3 ft / 24×36 in, printed poster, abstract sheet, and college ID",
     details:
       "Showcase technical concepts through impactful visual storytelling. Posters are evaluated on clarity, innovation, research depth, and presentation quality.",
-    highlights: ["Print + presentation round", "Design and technical scoring", "Rapid Q&A with judges"],
+    highlights: ["Theme: The Future of Innovation", "Print + presentation round", "Rapid Q&A with judges"],
+    coordinators: "Krishna - 93228 72997 | Sanket - 93094 96011",
     icon: "poster" as UiIcon,
     color: "from-purple-500/20 to-pink-600/20",
     borderColor: "border-purple-400/50",
   },
   { 
     id: 3,
-    name: "WAR-BOTS (Robo Race)",
+    name: "Roborace (War Bots)",
     category: "Robotics",
-    description: "Race custom-built robots on intense tracks. Dominate the arena with speed and precision.",
+    description: "Build and race your robot on an intense competitive track.",
     image: "/events/warbot.png",
     prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
-    fee: "₹300 per team",
-    teamSize: "3 members per team",
+    fee: "₹300",
+    teamSize: "Team (Max 3)",
     mode: "Offline",
     schedule: "24 & 25 March, 2026 ",
     venue: "DESPU campus ",
@@ -159,28 +161,30 @@ const events = [
     details:
       "Bring your custom robot and dominate intense head-to-head race tracks. Performance, build quality, and control precision define rankings.",
     highlights: ["Knockout format", "Live arena battles", "Engineering + speed scoring"],
+    coordinators: "Sanjyot - 81809 99616 | Aditya - 98606 60356",
     icon: "warbot" as UiIcon,
     color: "from-green-500/20 to-emerald-600/20",
     borderColor: "border-green-400/50",
   },
   {
     id: 4,
-    name: "Circuit Design",
+    name: "Circuit Design Challenge",
     category: "Electronics",
-    description: "Build and optimize analog/digital circuits under real constraints. Showcase your hardware engineering skills.",
+    description: "Design and implement a circuit solution under practical engineering constraints.",
     image: "/events/circuit.jpeg",
     prize: "1st: ₹10,000 · 2nd: ₹5,000 · 3rd: ₹3,000",
-    fee: "₹200 per team",
-    teamSize: "3 members per team",
+    fee: "₹200",
+    teamSize: "Team (Max 3)",
     mode: "Offline",
-    schedule: "March 25, 2026 ",
+    schedule: "25th March 2026",
     venue: "DESPU campus ",
     eligibility: "Undergraduate students  (Diploma / Engineering / Technology / Applied Sciences).",
     deadline: "March 20, 2026",
     requirements: "All necessary components and required equipment will be provided by the Organisers.",
     details:
       "Build and optimize analog/digital circuits under real constraints. Entries are judged for efficiency, reliability, and implementation quality.",
-    highlights: ["Round 1 — Qualifying", "Round 2 — Final Decider"],
+    highlights: ["Round 1 - Qualifying", "Round 2 - Final Decider"],
+    coordinators: "Naman - 90670 30868 | Chinmay - 75594 06620",
     icon: "circuit" as UiIcon,
     color: "from-orange-500/20 to-red-600/20",
     borderColor: "border-orange-400/50",
@@ -233,11 +237,11 @@ const events = [
     id: 7,
     name: "Valorant Tournament",
     category: "Gaming",
-    description: "Compete in a high-stakes 5v5 tactical shooter tournament. Showcase your strategy and aim.",
+    description: "5v5 tactical shooter tournament with PCs provided; bring your own peripherals.",
     image: "/events/valorant1.jpeg",
-    prize: "1st: ₹5,000 · 2nd: ₹3,000 · 3rd: ₹2,000",
-    fee: "₹400 per team",
-    teamSize: "5 players per team",
+    prize: "Prize Pool: ₹10,000 (₹5,000 · ₹3,000 · ₹2,000)",
+    fee: "₹400",
+    teamSize: "5v5",
     mode: "Offline",
     schedule: "24 & 25 March, 2026",
     venue: "DESPU campus   ",
@@ -247,6 +251,7 @@ const events = [
     details:
       "Compete in intense team-based tactical matches with seeded brackets. Performance is ranked by match wins, round difference, and finals result.",
     highlights: ["Seeded elimination bracket", "Live shoutcasting", "MVP recognition"],
+    coordinators: "Harshvardhan - 95185 49275 | Ansh - 97663 58662",
     icon: "gaming" as UiIcon,
     color: "from-yellow-500/20 to-orange-600/20",
     borderColor: "border-yellow-400/50",
@@ -972,6 +977,12 @@ export default function Home() {
                     <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Requirements</p>
                     <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.requirements}</p>
                   </div>
+                  {"coordinators" in selectedEvent && selectedEvent.coordinators ? (
+                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
+                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Coordinators</p>
+                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.coordinators}</p>
+                    </div>
+                  ) : null}
                 </div>
               )}
             </div>
@@ -1282,8 +1293,8 @@ export default function Home() {
 
         <div className="mx-auto max-w-6xl">
           <div className="relative grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-10">
-            <div>
-              <a href="#" aria-label="Go to home">
+            <div className="flex flex-col items-center md:items-start">
+              <a href="#" aria-label="Go to home" className="flex justify-center md:justify-start w-full">
                 <Image
                   src="/navon.png"
                   alt="NAVONMESH"
@@ -1292,7 +1303,7 @@ export default function Home() {
                   className="h-14 w-auto object-contain"
                 />
               </a>
-              <p className="mt-4 max-w-xs text-base leading-relaxed text-slate-400">
+              <p className="mt-4 max-w-xs text-base leading-relaxed text-slate-400 text-center md:text-left">
                 India&apos;s premier university technology festival celebrating innovation and excellence.
               </p>
             </div>
@@ -1314,6 +1325,9 @@ export default function Home() {
               </p>
               <p className="mt-2 text-base text-slate-400">
                 Phone: <span className="text-cyan-300">020 47200000</span>
+              </p>
+              <p className="mt-2 text-base leading-relaxed text-slate-400">
+                Overall Coordinators: <span className="text-cyan-300">Sahil Mazire - 82750 05757</span> | <span className="text-cyan-300">Krrish Rebbawar - 84689 71679</span>
               </p>
               <p className="mt-2 text-base leading-relaxed text-slate-400">
                 Address: Mukunddas Lohia Academic Complex, Behind BMCC, 182, Agaharkar Road, Shivajinagar, Pune 411 004
