@@ -919,6 +919,46 @@ export default function Home() {
 
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               <p className="text-base md:text-lg text-gray-300 leading-relaxed font-light">{selectedEvent.details}</p>
+              {selectedEvent.id === 2 ? (
+                <div className="rounded-2xl border border-cyan-300/40 bg-gradient-to-r from-cyan-500/15 to-blue-500/10 p-4 shadow-[0_0_30px_rgba(34,211,238,0.12)]">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-200/80">Poster Competition</p>
+                  <p className="mt-2 text-sm md:text-base font-semibold text-white">Competition documents</p>
+                  <div className="mt-3 flex flex-col gap-2 md:flex-row md:flex-wrap">
+                    <a
+                      href="/F_Title_20260315_114841_0000.docx"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg border border-cyan-300/60 bg-cyan-400/15 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-400/25 transition"
+                    >
+                      Poster Format docs
+                    </a>
+                    <a
+                      href="/Poster_Comp_format.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg border border-cyan-300/60 bg-cyan-400/15 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-400/25 transition"
+                    >
+                      Poster Format PDF
+                    </a>
+                  </div>
+                </div>
+              ) : null}
+              {selectedEvent.id === 4 ? (
+                <div className="rounded-2xl border border-cyan-300/40 bg-gradient-to-r from-cyan-500/15 to-blue-500/10 p-4 shadow-[0_0_30px_rgba(34,211,238,0.12)]">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-200/80">Circuit Design Challenge</p>
+                  <div className="mt-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <p className="text-sm md:text-base font-semibold text-white">Official Problem Statement PDF</p>
+                    <a
+                      href="/Navonmesh2026_Circuit_Building_Competition_Official_Problem_Statements.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg border border-cyan-300/60 bg-cyan-400/15 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-400/25 transition"
+                    >
+                      View PDF
+                    </a>
+                  </div>
+                </div>
+              ) : null}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3">
                   <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Prize Pool</p>
@@ -973,14 +1013,14 @@ export default function Home() {
                     <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Registration Deadline</p>
                     <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.deadline}</p>
                   </div>
-                  <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Requirements</p>
-                    <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.requirements}</p>
-                  </div>
-                  {"coordinators" in selectedEvent && selectedEvent.coordinators ? (
-                    <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
-                      <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Coordinators</p>
-                      <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.coordinators}</p>
+                   <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
+                     <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Requirements</p>
+                     <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.requirements}</p>
+                   </div>
+                   {"coordinators" in selectedEvent && selectedEvent.coordinators ? (
+                     <div className="rounded-xl border border-cyan-500/30 bg-[#041121]/70 p-3 md:col-span-2">
+                       <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-300/80">Coordinators</p>
+                       <p className="text-sm md:text-base text-slate-200 mt-1">{selectedEvent.coordinators}</p>
                     </div>
                   ) : null}
                 </div>
