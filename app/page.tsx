@@ -134,7 +134,7 @@ const events = [
     venue: "DESPU campus ",
     eligibility: "Open to All students",
     deadline: "March 21, 2026",
-    requirements: "Poster size 2×3 ft / 24×36 in, printed poster, abstract sheet, and college ID",
+    requirements: "Poster size 3×2 ft / 36×24 in, printed poster, abstract sheet, and college ID",
     details:
       "Showcase technical concepts through impactful visual storytelling. Posters are evaluated on clarity, innovation, research depth, and presentation quality.",
     highlights: ["Theme: The Future of Innovation", "Print + presentation round", "Rapid Q&A with judges"],
