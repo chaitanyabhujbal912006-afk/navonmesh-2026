@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { AnimatePresence, LayoutGroup, motion, useMotionTemplate, useMotionValue, useSpring, useViewportScroll, useTransform } from "framer-motion";
@@ -925,7 +925,7 @@ export default function Home() {
                   <p className="mt-2 text-sm md:text-base font-semibold text-white">Competition documents</p>
                   <div className="mt-3 flex flex-col gap-2 md:flex-row md:flex-wrap">
                     <a
-                      href="/F_Title_20260315_114841_0000.docx"
+                      href="/F_Novonmesh%20Poster%20Format.docx"
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center justify-center rounded-lg border border-cyan-300/60 bg-cyan-400/15 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-400/25 transition"
@@ -933,7 +933,7 @@ export default function Home() {
                       Poster Format docs
                     </a>
                     <a
-                      href="/Poster_Comp_format.pdf"
+                      href="/F_Novonmesh%20Poster%20Format.pdf"
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center justify-center rounded-lg border border-cyan-300/60 bg-cyan-400/15 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-400/25 transition"
