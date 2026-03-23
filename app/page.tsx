@@ -289,6 +289,12 @@ const faqData = [
   },
 ];
 
+const sponsors = [
+  { name: "Sponsor 1", logo: "/sponsors/sponsor-1.jpg" },
+  { name: "Sponsor 2", logo: "/sponsors/sponsor-2.png" },
+  { name: "Sponsor 3", logo: "/sponsors/sponsor-3.png" },
+];
+
 export default function Home() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<(typeof events)[number] | null>(null);
@@ -1289,8 +1295,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/*
-      ==================== SPONSORS SECTION ====================
+      {/* ==================== SPONSORS SECTION ==================== */}
       <section className="relative py-14 md:py-20 px-4 md:px-8 bg-gradient-to-b from-transparent via-slate-950/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -1303,24 +1308,31 @@ export default function Home() {
             Our Partners
           </motion.h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {sponsors.map((sponsor) => (
               <motion.div
-                key={item}
+                key={sponsor.name}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.05 }}
-                className="cyber-card h-24 md:h-32 rounded-xl border border-cyan-500/30 flex items-center justify-center hover:border-cyan-300/70 hover:shadow-lg hover:shadow-cyan-500/20 transition duration-300 cursor-pointer backdrop-blur-sm"
+                className="cyber-card h-28 md:h-36 rounded-xl border border-cyan-500/30 flex items-center justify-center hover:border-cyan-300/70 hover:shadow-lg hover:shadow-cyan-500/20 transition duration-300 cursor-pointer backdrop-blur-sm p-5"
               >
-                <span className="text-gray-500 font-bold text-center px-2 text-sm md:text-base">Sponsor {item}</span>
+                <div className="relative h-full w-full">
+                  <Image
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-contain"
+                  />
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-      */}
 
       {/* ==================== FOOTER ==================== */}
       <footer
